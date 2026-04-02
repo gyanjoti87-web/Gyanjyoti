@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Gyanjyoti School | Dadeldhura, Nepal</title>
+  <!-- Google Fonts + Font Awesome + AOS -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    /* variables */
+    :root {
+      --primary: #e67e22;
+      --primary-dark: #c0392b;
+      --secondary: #2c3e66;
+      --secondary-light: #1e2f4b;
+      --light-bg: #ffffff;
+      --gray-light: #f0f2f5;
+      --shadow-sm: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.02);
+      --shadow-md: 0 20px 25px -12px rgba(0,0,0,0.1);
+      --transition: all 0.3s ease;
+    }
+
+    /* announcement */
+    .announcement-bar {
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 10px 16px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      position: sticky;
+      top: 0;
+      z-index: 1001;
+    }
+
+    /* header & nav with logo */
+    header {
+      background: white;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.8rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-img {
+      width: 55px;
+      height: 55px;
+      object-fit: cover;
+      border-radius: 50%;
+      background: #fff3e6;
+      padding: 6px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .logo-text h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--secondary);
+      line-height: 1.2;
+    }
+    .logo-text p {
+      font-size: 0.7rem;
+      color: var(--primary);
+      letter-spacing: 1px;
+      font-weight: 500;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.8rem;
+      list-style: none;
+      transition: var(--transition);
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 500;
+      color: #2c3e66;
+      transition: 0.2s;
+      font-size: 1rem;
+    }
+
+    .nav-links a:hover, .nav-links a.active-page {
+      color: var(--primary);
+    }
+
+    .menu-toggle {
+      font-size: 1.6rem;
+      cursor: pointer;
+      display: none;
+      color: var(--secondary);
+    }
+
+    /* page sections */
+    .page {
+      display: none;
+      animation: fadePage 0.3s ease;
+    }
+    .page.active-page-section {
+      display: block;
+    }
+    @keyframes fadePage {
+      from { opacity: 0; transform: translateY(8px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+
+    /* buttons & cards */
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      padding: 10px 24px;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+      display: inline-block;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      background: #b45f1b;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      color: var(--secondary);
+      margin-bottom: 2rem;
+      position: relative;
+      font-weight: 700;
+    }
+    .section-title:after {
+      content: '';
+      width: 70px;
+      height: 4px;
+      background: var(--primary);
+      display: block;
+      margin-top: 8px;
+      border-radius: 4px;
+    }
+
+    /* cards grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .feature-card, .value-card, .faculty-card {
+      background: white;
+      border-radius: 24px;
+      padding: 1.8rem;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      text-align: center;
+    }
+    .feature-card:hover, .faculty-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: var(--shadow-md);
+    }
+    .feature-card i {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    /* hero slider */
+    .hero-slider {
+      position: relative;
+      width: 100%;
+      height: 70vh;
+      min-height: 400px;
+      overflow: hidden;
+      border-radius: 0 0 28px 28px;
+      margin-bottom: 2rem;
+    }
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .slide.active {
+      opacity: 1;
+      z-index: 2;
+    }
+    .ken-zoom {
+      animation: kenZoom 8s ease-in-out infinite;
+    }
+    @keyframes kenZoom {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.08); }
+    }
+    .slider-controls {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    .slider-controls button {
+      background: rgba(0,0,0,0.6);
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      padding: 8px 18px;
+      border-radius: 40px;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+    }
+    .progress-bar-container {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: rgba(255,255,255,0.5);
+      z-index: 10;
+    }
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: var(--primary);
+      transition: width 0.1s linear;
+    }
+
+    /* stats */
+    .stats-section {
+      background: var(--secondary);
+      color: white;
+      padding: 3rem 1rem;
+      border-radius: 48px;
+      margin: 2rem 0;
+    }
+    .stats-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: 2rem;
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+    }
+
+    /* result tabs */
+    .result-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin: 2rem 0;
+    }
+    .tab-btn {
+      background: #eef2f7;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .tab-btn.active-tab {
+      background: var(--primary);
+      color: white;
+    }
+    .result-group {
+      display: none;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .result-group.active-group {
+      display: grid;
+    }
+    .result-card img {
+      width: 100%;
+      border-radius: 20px;
+      transition: transform 0.3s;
+      box-shadow: var(--shadow-sm);
+    }
+    .result-card img:hover {
+      transform: scale(1.03);
+    }
+
+    /* gallery lightbox */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .gallery-img {
+      cursor: pointer;
+      border-radius: 24px;
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      transition: 0.3s;
+    }
+    .gallery-img:hover {
+      transform: scale(1.02);
+      opacity: 0.9;
+    }
+    .lightbox {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.2s;
+    }
+    .lightbox.active {
+      visibility: visible;
+      opacity: 1;
+    }
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 16px;
+    }
+    .close-lightbox {
+      position: absolute;
+      top: 25px;
+      right: 35px;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+
+    /* whatsapp */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: #25D366;
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+      z-index: 1100;
+      transition: 0.2s;
+    }
+    .whatsapp-float:hover {
+      transform: scale(1.08);
+    }
+
+    footer {
+      background: #1a2a3f;
+      color: #ccc;
+      padding: 2rem 1rem;
+      text-align: center;
+      margin-top: 3rem;
+    }
+    .map-iframe {
+      width: 100%;
+      height: 280px;
+      border-radius: 28px;
+      border: none;
+    }
+    @media (max-width: 768px) {
+      .menu-toggle { display: block; }
+      .nav-links {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        background: white;
+        width: 80%;
+        height: calc(100vh - 80px);
+        flex-direction: column;
+        padding: 2rem;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        transition: 0.3s;
+        gap: 1.8rem;
+        z-index: 1000;
+      }
+      .nav-links.active {
+        left: 0;
+      }
+      .hero-slider { height: 50vh; }
+      .stats-grid { flex-direction: column; align-items: center; }
+      .logo-img { width: 45px; height: 45px; }
+      .logo-text h1 { font-size: 1.2rem; }
+    }
+    .notice-board {
+      background: var(--light-bg);
+      border-radius: 28px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .notice-item {
+      border-left: 4px solid var(--primary);
+      padding: 0.8rem 1rem;
+      margin-bottom: 1rem;
+      background: #fef9e6;
+    }
+    .faculty-img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+    }
+    .calendar-month {
+      background: white;
+      border-radius: 24px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      transition: 0.2s;
+    }
+    .event-item {
+      border-left: 3px solid var(--primary);
+      padding-left: 10px;
+      margin: 8px 0;
+    }
+    .container-custom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="announcement-bar">
+  <i class="fas fa-bullhorn"></i> Admissions Open for 2083-84 | Limited Seats | Enroll Now!
+</div>
+
+<header>
+  <div class="nav-container">
+    <div class="logo-area">
+      <!-- Logo Image - Replace with your own logo URL -->
+      <img src="fav.jpeg" alt="Gyanjyoti School Logo" class="logo-img">
+      <div class="logo-text">
+        <h1>Gyanjyoti School</h1>
+        <p>Dadeldhura, Nepal | Illuminating Minds</p>
+      </div>
+    </div>
+    <div class="menu-toggle" id="mobileMenuBtn"><i class="fas fa-bars"></i></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#" data-page="home" class="nav-link active-page">Home</a></li>
+      <li><a href="#" data-page="about" class="nav-link">About</a></li>
+      <li><a href="#" data-page="result" class="nav-link">Results</a></li>
+      <li><a href="#" data-page="faculty" class="nav-link">Faculty</a></li>
+      <li><a href="#" data-page="calendar" class="nav-link">Calendar</a></li>
+      <li><a href="#" data-page="gallery" class="nav-link">Gallery</a></li>
+      <li><a href="#" data-page="contact" class="nav-link">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="app">
+  <!-- HOME PAGE -->
+  <section id="home" class="page active-page-section">
+    <div class="hero-slider" id="heroSlider">
+      <div class="slide active" style="background-image: url('https://scontent.fbwa5-1.fna.fbcdn.net/v/t39.30808-6/651735303_122301107090210231_8642041852146530040_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=7b2446&_nc_ohc=OE3NbUlN0PMQ7kNvwFWnaxR&_nc_oc=Adofg-XhRR4VeryURkGAw5hlF3TTTqP6sEWxvCH72MK_aZxqxGv9LF9e05E-6RVwL-pYhySSKXp4V0tmI7iMLW5P&_nc_zt=23&_nc_ht=scontent.fbwa5-1.fna&_nc_gid=kLeHPaHHSE5g1qKCdCVi1A&_nc_ss=7a3a8&oh=00_Af0kMOT6sHnyLday-ihVDQYK93M9X8HHI4Cj5LlXPkuHOg&oe=69D3ECC1'); background-size: cover;"></div>
+      <div class="slide" style="background-image: url('Screenshot_2-4-2026_14926_www.facebook.com.jpeg'); background-size: cover;"></div>
+      <div class="slide" style="background-image: url('https://scontent.fbwa5-1.fna.fbcdn.net/v/t39.30808-6/602913568_4298229787114083_218596657588495024_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=7b2446&_nc_ohc=8ylQfjSpu5UQ7kNvwHiYVkM&_nc_oc=Adr1U5qupwkF9G-V7iIErj4df1hwZOLnjxw0rpUHrBspi62UL_L2pQjnqm9qyQ9KwlwBqhInMHFOv826WOSmrb3W&_nc_zt=23&_nc_ht=scontent.fbwa5-1.fna&_nc_gid=rmUPRbi8fy_oJSmqlIAnLQ&_nc_ss=7a3a8&oh=00_Af0HyIwOUkzOaI-LlSsGqlSWMuEIzax88Q6zENgZdg0tIQ&oe=69D3F2C5'); background-size: cover;"></div>
+      <div class="slider-controls">
+        <button id="prevSlide"><i class="fas fa-chevron-left"></i></button>
+        <button id="nextSlide"><i class="fas fa-chevron-right"></i></button>
+      </div>
+      <div class="progress-bar-container"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+
+    <div class="container-custom">
+      <div class="stats-section" data-aos="fade-up">
+        <div class="stats-grid">
+          <div><div class="stat-number" id="stat1">0</div><div>Years of Excellence</div></div>
+          <div><div class="stat-number" id="stat2">0</div><div>Students Enrolled</div></div>
+          <div><div class="stat-number" id="stat3">0</div><div>Qualified Teachers</div></div>
+          <div><div class="stat-number" id="stat4">0</div><div>Pass Percentage</div></div>
+        </div>
+      </div>
+
+      <h2 class="section-title">Why Gyanjyoti?</h2>
+      <div class="cards-grid">
+        <div class="feature-card" data-aos="zoom-in"><i class="fas fa-chalkboard-user"></i><h3>Modern Pedagogy</h3><p>Activity-based learning & smart classes</p></div>
+        <div class="feature-card" data-aos="zoom-in" data-aos-delay="100"><i class="fas fa-trophy"></i><h3>Excellence Track</h3><p>Consistent top results in Dadeldhura</p></div>
+        <div class="feature-card" data-aos="zoom-in" data-aos-delay="200"><i class="fas fa-hand-holding-heart"></i><h3>Scholarships</h3><p>Merit & need-based financial aid</p></div>
+        <div class="feature-card" data-aos="zoom-in" data-aos-delay="300"><i class="fas fa-tree"></i><h3>Eco Campus</h3><p>Green environment + sports facilities</p></div>
+      </div>
+
+      <h2 class="section-title">📢 Notice Board</h2>
+      <div class="notice-board" data-aos="fade-right">
+        <div class="notice-item"><i class="fas fa-file-alt"></i> <strong>25 Chaitra, 2082:</strong> Result of Third Terminal Examination.</div>
+        <div class="notice-item"><i class="fas fa-calendar-alt"></i> <strong>2 Baishak, 2083:</strong> Admisson Starts.</div>
+        <div class="notice-item"><i class="fas fa-file-alt"></i> <strong>10 Baishak, 2083:</strong> School Resumes.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT PAGE -->
+  <section id="about" class="page">
+    <div class="container-custom">
+      <div class="hero-grad" style="background: linear-gradient(135deg, #2c3e66 0%, #e67e22 100%); border-radius: 2rem; padding: 3rem 2rem; color:white; margin-bottom: 2rem;" data-aos="fade-down">
+        <h1>About Gyanjyoti School</h1>
+        <p>Empowering rural Nepal since 2064 — shaping future leaders with values and excellence.</p>
+      </div>
+      <div class="cards-grid">
+        <div class="feature-card" data-aos="flip-left"><i class="fas fa-landmark"></i><h3>History</h3><p>Founded in 2064 with 100 students, now a premier institution in Sudurpashchim province.</p></div>
+        <div class="feature-card" data-aos="flip-left" data-aos-delay="100"><i class="fas fa-eye"></i><h3>Mission</h3><p>To provide holistic education blending modern tech with Nepali cultural values.</p></div>
+        <div class="feature-card" data-aos="flip-left" data-aos-delay="200"><i class="fas fa-dove"></i><h3>Vision</h3><p>To become a beacon of knowledge in Himalayan region, fostering global citizens.</p></div>
+      </div>
+      <h2 class="section-title">Core Values</h2>
+      <div class="cards-grid">
+        <div class="value-card" data-aos="fade-up"><i class="fas fa-star"></i><h3>Excellence</h3><p>Strive for academic & co-curricular brilliance.</p></div>
+        <div class="value-card" data-aos="fade-up" data-aos-delay="100"><i class="fas fa-handshake"></i><h3>Integrity</h3><p>Honesty and ethical practices.</p></div>
+        <div class="value-card" data-aos="fade-up" data-aos-delay="200"><i class="fas fa-users"></i><h3>Community</h3><p>Active engagement with Dadeldhura.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULT PAGE -->
+  <section id="result" class="page">
+    <div class="container-custom">
+      <h2 class="section-title">📊 Exam Results</h2>
+      <div class="result-tabs" id="resultTabs"></div>
+      <div id="resultGroupsContainer"></div>
+    </div>
+  </section>
+
+  <!-- FACULTY -->
+  <section id="faculty" class="page">
+    <div class="container-custom">
+      <h2 class="section-title">👩‍🏫 Teaching Staff</h2>
+      <div class="cards-grid" id="teachingFaculty"></div>
+      <h2 class="section-title">📋 Administrative Staff</h2>
+      <div class="cards-grid" id="adminFaculty"></div>
+    </div>
+  </section>
+
+  <!-- CALENDAR -->
+  <section id="calendar" class="page">
+    <div class="container-custom">
+      <h2 class="section-title">📅 Academic Calendar (2083-2026)</h2>
+      <div id="calendarGrid" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.5rem;"></div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery" class="page">
+    <div class="container-custom">
+      <h2 class="section-title">📸 Photo Gallery</h2>
+      <div class="gallery-grid" id="photoGallery"></div>
+    </div>
+    <div id="lightbox" class="lightbox"><span class="close-lightbox">&times;</span><img id="lightboxImg" src=""></div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="page">
+    <div class="container-custom">
+      <div class="cards-grid">
+        <div class="feature-card" data-aos="fade-right"><i class="fas fa-map-marker-alt"></i><h3>Address</h3><p>Dadaban, Dadeldhura, Nepal</p><i class="fas fa-phone"></i> +977-9848825610<br><i class="fas fa-envelope"></i> gyanjyoti87@gmail.com</div>
+        <div class="feature-card" data-aos="fade-left"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3856.4434872833435!2d80.70956724881015!3d29.30878185069716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39a165cac47294db%3A0xd3a06a73492029b3!2sshree%20gyanjyoti!5e1!3m2!1sen!2snp!4v1775120940210!5m2!1sen!2snp" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+      </div>
+      <h2 class="section-title">Send Message</h2>
+      <form id="contactForm" style="background:white; padding:2rem; border-radius:2rem;">
+        <input type="text" id="name" placeholder="Your Name" required style="width:100%; padding:12px; margin:10px 0; border-radius:40px; border:1px solid #ddd;">
+        <input type="email" id="email" placeholder="Email" required style="width:100%; padding:12px; margin:10px 0; border-radius:40px;">
+        <textarea id="message" rows="4" placeholder="Your message" style="width:100%; border-radius:24px; padding:12px;"></textarea>
+        <button type="submit" class="btn-primary">Send <i class="fas fa-paper-plane"></i></button>
+        <p id="formFeedback" style="margin-top:1rem;"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div>© 2025 Gyanjyoti School, Dadeldhura | Follow us: <a href="https://www.facebook.com/profile.php?id=61556306943312" style="color:#e67e22;"><i class="fab fa-facebook"></i> Facebook</a></div>
+  <div style="text-align: center; padding: 25px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); color: #fff; font-size: 16px; border-top: 1px solid rgba(255,255,255,0.2); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <p style="margin: 0; letter-spacing: 1px;">
+        ✨ Created with 
+        <span style="color: #ff6b6b; display: inline-block; animation: heartbeat 1.5s ease infinite;">❤️</span> 
+        by <strong style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; background-clip: text; color: transparent;">Prashant Upreti</strong>
+    </p>
+  </div>
+  
+</footer>
+<a href="https://wa.me/9779848825610" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  // ---------- GLOBAL ----------
+  AOS.init({ duration: 800, once: true, offset: 50 });
+
+  // Page navigation
+  const pages = document.querySelectorAll('.page');
+  const navLinks = document.querySelectorAll('.nav-link');
+  function showPage(pageId) {
+    pages.forEach(page => page.classList.remove('active-page-section'));
+    document.getElementById(pageId).classList.add('active-page-section');
+    navLinks.forEach(link => link.classList.remove('active-page'));
+    document.querySelector(`.nav-link[data-page="${pageId}"]`).classList.add('active-page');
+    if(window.innerWidth <= 768) document.getElementById('navLinks').classList.remove('active');
+    AOS.refresh();
+  }
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const pageId = link.getAttribute('data-page');
+      showPage(pageId);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+  document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('active');
+  });
+
+  // ---------- HERO SLIDER (auto, Ken Burns via CSS) ----------
+  let slides = document.querySelectorAll('.slide');
+  let currentSlide = 0;
+  let slideInterval;
+  let progressInterval;
+  const progressFill = document.getElementById('progressFill');
+  function resetProgressAndTimer() {
+    if(progressInterval) clearInterval(progressInterval);
+    if(slideInterval) clearInterval(slideInterval);
+    progressFill.style.width = '0%';
+    let startTime = Date.now();
+    progressInterval = setInterval(() => {
+      let elapsed = (Date.now() - startTime);
+      let percent = Math.min(100, (elapsed / 5000) * 100);
+      progressFill.style.width = percent + '%';
+      if(percent >= 100) clearInterval(progressInterval);
+    }, 20);
+    slideInterval = setInterval(() => {
+      nextSlideFunc();
+    }, 5000);
+  }
+  function updateSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index);
+      if(i===index) slide.style.animation = 'kenZoom 8s ease-in-out infinite';
+      else slide.style.animation = 'none';
+    });
+    resetProgressAndTimer();
+  }
+  function nextSlideFunc() { currentSlide = (currentSlide + 1) % slides.length; updateSlide(currentSlide); }
+  function prevSlideFunc() { currentSlide = (currentSlide - 1 + slides.length) % slides.length; updateSlide(currentSlide); }
+  document.getElementById('prevSlide').addEventListener('click', () => { prevSlideFunc(); });
+  document.getElementById('nextSlide').addEventListener('click', () => { nextSlideFunc(); });
+  // touch swipe
+  let touchStart = 0;
+  const sliderDiv = document.getElementById('heroSlider');
+  if(sliderDiv) {
+    sliderDiv.addEventListener('touchstart', e => { touchStart = e.changedTouches[0].screenX; });
+    sliderDiv.addEventListener('touchend', e => { let diff = e.changedTouches[0].screenX - touchStart; if(Math.abs(diff)>50) diff>0 ? prevSlideFunc() : nextSlideFunc(); });
+  }
+  updateSlide(0);
+
+  // stats counter
+  const statNumbers = [document.getElementById('stat1'), document.getElementById('stat2'), document.getElementById('stat3'), document.getElementById('stat4')];
+  const targets = [19, 150, 12, 99];
+  let counted = false;
+  const observer = new IntersectionObserver((entries) => {
+    if(entries[0].isIntersecting && !counted) {
+      counted = true;
+      statNumbers.forEach((el, idx) => {
+        let current = 0;
+        let increment = targets[idx] / 40;
+        let timer = setInterval(() => {
+          current += increment;
+          if(current >= targets[idx]) { el.innerText = targets[idx]; clearInterval(timer); }
+          else el.innerText = Math.floor(current);
+        }, 25);
+      });
+    }
+  }, { threshold: 0.5 });
+  const statsSec = document.querySelector('.stats-section');
+  if(statsSec) observer.observe(statsSec);
+
+  // result page dynamic
+  const classes = ['Nursery','LKG','UKG','Class 1','Class 2','Class 3','Class 4','Class 5','Class 6','Class 7','Class 8'];
+  const tabsDiv = document.getElementById('resultTabs');
+  const groupsContainer = document.getElementById('resultGroupsContainer');
+  
+  function buildResults() {
+    classes.forEach((cls, idx) => {
+      let btn = document.createElement('button');
+      btn.innerText = cls;
+      btn.classList.add('tab-btn');
+      if(idx===0) btn.classList.add('active-tab');
+      btn.dataset.classIdx = idx;
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-tab'));
+        btn.classList.add('active-tab');
+        document.querySelectorAll('.result-group').forEach(g => g.classList.remove('active-group'));
+        document.getElementById(`group-${idx}`).classList.add('active-group');
+        
+        // 👇 ADD THIS LINE - reattach click handlers when tab changes
+        attachResultImageClickHandlers();
+      });
+      tabsDiv.appendChild(btn);
+      let groupDiv = document.createElement('div');
+      groupDiv.className = 'result-group' + (idx===0 ? ' active-group' : '');
+      groupDiv.id = `group-${idx}`;
+      for(let i=1;i<=3;i++) {
+        let imgDiv = document.createElement('div');
+        imgDiv.className = 'result-card';
+        imgDiv.innerHTML = `<img src="#" alt="Result ${cls}" style="border-radius:20px; width:100%;">`;
+        groupDiv.appendChild(imgDiv);
+      }
+      groupsContainer.appendChild(groupDiv);
+    });
+  }
+  
+  buildResults();
+  
+  // 👇 ADD ALL THIS FULLSCREEN CODE AFTER buildResults()
+  
+  // Create modal for fullscreen result images
+  const resultModal = document.createElement('div');
+  resultModal.id = 'resultLightbox';
+  resultModal.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  `;
+
+  const modalImg = document.createElement('img');
+  modalImg.style.cssText = `
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 16px;
+    box-shadow: 0 0 50px rgba(0,0,0,0.5);
+    cursor: default;
+  `;
+
+  const closeBtn = document.createElement('span');
+  closeBtn.innerHTML = '&times;';
+  closeBtn.style.cssText = `
+    position: absolute;
+    top: 25px;
+    right: 35px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    z-index: 10000;
+  `;
+  closeBtn.onmouseover = () => closeBtn.style.color = '#e67e22';
+  closeBtn.onmouseout = () => closeBtn.style.color = 'white';
+
+  resultModal.appendChild(modalImg);
+  resultModal.appendChild(closeBtn);
+  document.body.appendChild(resultModal);
+
+  function closeResultModal() {
+    resultModal.style.visibility = 'hidden';
+    resultModal.style.opacity = '0';
+  }
+
+  function openResultModal(imageSrc) {
+    modalImg.src = imageSrc;
+    resultModal.style.visibility = 'visible';
+    resultModal.style.opacity = '1';
+  }
+
+  function attachResultImageClickHandlers() {
+    const resultImages = document.querySelectorAll('.result-card img');
+    resultImages.forEach(img => {
+      img.style.cursor = 'pointer';
+      // Remove existing listener to avoid duplicates
+      img.removeEventListener('click', img.clickHandler);
+      img.clickHandler = () => openResultModal(img.src);
+      img.addEventListener('click', img.clickHandler);
+    });
+  }
+
+  resultModal.addEventListener('click', (e) => {
+    if (e.target === resultModal) {
+      closeResultModal();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && resultModal.style.visibility === 'visible') {
+      closeResultModal();
+    }
+  });
+
+  // Initial attachment of click handlers
+  attachResultImageClickHandlers();
+  
+  // 👆 FULLSCREEN CODE ENDS HERE
+  // faculty generation
+  const teaching = [
+    { name:'Mr. YaduNath Upreti', role:'Principal', exp:'20+ yrs', img:'https://scontent.fbwa5-1.fna.fbcdn.net/v/t39.30808-6/480303177_3974980439439021_7634743032809290475_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=1d70fc&_nc_ohc=Efc6KRY0nh0Q7kNvwE7v45h&_nc_oc=AdpVHPPOdoZMyT29sllwsWni8LCJpYPhzQ54D-uoma1fIPhcw--fjLUm8XLxnG3qcS-T3AEbkE2oKCfMoTlZKyAm&_nc_zt=23&_nc_ht=scontent.fbwa5-1.fna&_nc_gid=wcSq7aj9EbsYJKE-mL416g&_nc_ss=7a3a8&oh=00_Af2ncc7FtmvMsqG4pvlPkHPJzas8K_5ApSIagGdUJGV1yA&oe=69D40699' },
+    { name:'Mr. Rajendra Bhatta', role:'Math & Science', exp:'12 yrs', img:'https://pps.whatsapp.net/v/t61.24694-24/153516527_127733466345893_5718010392199331906_n.jpg?ccb=11-4&oh=01_Q5Aa4AGlaPUGCfO2KezenQcE3r3bbAV3gtum7KIlianHDRQ9nA&oe=69D22C30&_nc_sid=5e03e0&_nc_cat=111' },
+    { name:'Ms. Deepak Awasthi', role:'Teacher', exp:'8 yrs', img:'https://pps.whatsapp.net/v/t61.24694-24/542569522_1774697617253053_7075382756434574624_n.jpg?ccb=11-4&oh=01_Q5Aa4AG1aYlMrfdbLjpFo9JZiqSxiqNLqB3NfiSJY4KuuRUMKQ&oe=69D22D4F&_nc_sid=5e03e0&_nc_cat=110' },
+    { name:'Mr. Karan BK', role:'English', exp:'6 yrs', img:'https://pps.whatsapp.net/v/t61.24694-24/518975212_4684451285109076_1485409008456813650_n.jpg?ccb=11-4&oh=01_Q5Aa4AGSRWu4EQRxi6acXTk3Bt3s-N7JTKPga8L8bneK7AtbZQ&oe=69D25AD5&_nc_sid=5e03e0&_nc_cat=104' },
+    { name:'Mr.  Govinda Bhul', role:'Computer Science', exp:'5 yrs', img:'https://scontent.fbwa5-2.fna.fbcdn.net/v/t39.30808-1/297981673_2354504901396402_1486979928709154171_n.jpg?stp=c0.106.640.640a_dst-jpg_s200x200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=e99d92&_nc_ohc=_KKdNVw0_WcQ7kNvwEtDmCO&_nc_oc=Adq2L0tc1zBhd7y9YkjgmHr5gtRgpiMPsKZe88Y1TF1f6gMrsgavPCebcCTLiF6gH_x6au6s6Fvfn1JEg9oYckY2&_nc_zt=24&_nc_ht=scontent.fbwa5-2.fna&_nc_gid=HwFmCfvIfC4PeYGTJKecrA&_nc_ss=7a3a8&oh=00_Af0a6qqfJuh7mEaXHVw3wMVC6ks8ZRMQGkkA3oKXvTv_bg&oe=69D417BC' },{ name:'Mrs. Ganga Bist', role:'Social Studies', exp:'10 yrs', img:'https://scontent.fbwa5-2.fna.fbcdn.net/v/t39.30808-1/328314596_712673993837618_6557049020652518932_n.jpg?stp=cp0_dst-jpg_s60x60_tt6&_nc_cat=111&ccb=1-7&_nc_sid=e99d92&_nc_ohc=bVNBNezLhyMQ7kNvwE9itod&_nc_oc=AdquaTpl6BRF9RXc9pPd6cq6VLjzMmOpJlnw4Z-UMfPXsnxqeY_CaYzHDhj97Z6mM0Kuocvfx1gGzar3azxEbd7x&_nc_zt=24&_nc_ht=scontent.fbwa5-2.fna&_nc_gid=Gef8Y0-aaudn3A6RB6-cAA&_nc_ss=7a3a8&oh=00_Af3VxMpYaU1WPk3BTcIxfcgIGWAwwshHe8VKu7tuJ2JWCA&oe=69D3F578' }, { name:'Mrs. Namita Upreti', role:'Teacher', exp:'6 yrs', img:'https://scontent.fbwa5-1.fna.fbcdn.net/v/t39.30808-6/505438589_4094857377451326_1921222474280111645_n.jpg?stp=dst-jpg_p526x296_tt6&_nc_cat=105&ccb=1-7&_nc_sid=7b2446&_nc_ohc=oee6LyhPzrUQ7kNvwFCdUrv&_nc_oc=AdrDUpRbG9pd75Zn59SsP2Z4FszYpG7QPM2eXMZgaDrf57T92lBz22dHh_kuAxEuQXPtY--4wFf0H8J7MWrGDil5&_nc_zt=23&_nc_ht=scontent.fbwa5-1.fna&_nc_gid=w0rNImYQaXfx5oClHplecw&_nc_ss=7a3a8&oh=00_Af2YXqSbeaGSPDCIamQDuSnlRBllc1ZNsFCAvyAWqhvz3g&oe=69D400F0' },{ name:"Mrs. Kabita Deuba", role:"Teacher", exp:"2yrs", img:"#"}
+  ];
+  const admin = [
+    { name:'Mrs. Parbhati Chunara', role:'Asistant', exp:'7 yrs', img:'https://scontent.fbwa5-2.fna.fbcdn.net/v/t39.30808-1/540690946_1097774402555849_7896969845244470146_n.jpg?stp=cp0_dst-jpg_s60x60_tt6&_nc_cat=110&ccb=1-7&_nc_sid=e99d92&_nc_ohc=zqIxvXWjxQgQ7kNvwHy9Riv&_nc_oc=Adp5t5nIorrvyxTU1mAG4vUvBsqlJoKPX--5QvqROcVZf-rRfPm2hfNAWwgXzGHtZL6JJvNilZbf89hgnXMZHOSK&_nc_zt=24&_nc_ht=scontent.fbwa5-2.fna&_nc_gid=9HV91mY1WJKM8-FD-rzB5Q&_nc_ss=7a3a8&oh=00_Af3Uj10JHqYs7jWcmOYp--YndHtyNUK0tPXYJmjlLjnHMw&oe=69D41FD0' }
+  ];
+  function renderFaculty(arr, containerId) {
+    let cont = document.getElementById(containerId);
+    if(cont) {
+      cont.innerHTML = '';
+      arr.forEach(f => {
+        let card = document.createElement('div'); card.className = 'faculty-card';
+        card.innerHTML = `<img src="${f.img}" class="faculty-img" onerror="this.src='https://via.placeholder.com/120'"><h3>${f.name}</h3><p>${f.role}</p><small><i class="fas fa-clock"></i> ${f.exp} experience</small>`;
+        cont.appendChild(card);
+      });
+    }
+  }
+  renderFaculty(teaching, 'teachingFaculty');
+  renderFaculty(admin, 'adminFaculty');
+
+  // calendar
+  const months = ['Baishak 2083','Jestha 2083','Ashad 2083','Shrawan 2083','Bhadra 2083','Ashoj 2083','Kartik 2083','Mangsir 2083','Poush 2083','Magh 2026','Falgun 2026','Chaitra 2026'];
+  const eventsMap = {
+    'Baishak 2083':['New session starts', 'Admission deadline'],
+    'Jestha 2083':['First Terminal Exam','Parents day'],
+    'Ashad 2083':['Summer vacation','Sports meet'],
+    'Shrawan 2083':['Resumption of classes','Quiz competition'],
+    'Bhadra 2083':['Teej celebration','Unit test'],
+    'Ashoj 2083':['Dashain break','Essay contest'],
+    'Kartik 2083':['Tihar fest','Field trip'],
+    'Mangsir 2083':['Second Terminal Exam','PTM'],
+    'Poush 2083':['Winter camp','Annual sports'],
+    'Magh 2026':['Pre-final exams','Science exhibition'],
+    'Falgun 2026':['Final exam preparation','Farewell'],
+    'Chaitra 2026':['Annual result day','New admission open']
+  };
+  const calGrid = document.getElementById('calendarGrid');
+  if(calGrid) {
+    months.forEach((month, idx) => {
+      let div = document.createElement('div');
+      div.className = 'calendar-month';
+      div.setAttribute('data-aos','fade-up');
+      div.setAttribute('data-aos-delay', (idx*50));
+      let eventsHtml = (eventsMap[month] || ['General classes']).map(ev => `<div class="event-item"><i class="fas fa-circle" style="font-size:8px; color:#e67e22;"></i> ${ev}</div>`).join('');
+      div.innerHTML = `<h3><i class="fas fa-calendar-week"></i> ${month}</h3>${eventsHtml}`;
+      calGrid.appendChild(div);
+    });
+  }
+
+  // gallery photo + lightbox
+  const photoUrls = ['https://scontent.fbwa5-2.fna.fbcdn.net/v/t39.30808-1/427908797_122101944236210231_2061013710772120694_n.jpg?stp=c7.0.400.400a_dst-jpg_s200x200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=e99d92&_nc_ohc=okyeZrX6lNEQ7kNvwF_pUuY&_nc_oc=AdoZgaDAAhVtTsjofbUmGgaw6reThnRe1i0wGRVvvVSAqHz0qtV-gw7_Lgn-Fx6JR7y8TtUICV4OdDXCHg5BMieD&_nc_zt=24&_nc_ht=scontent.fbwa5-2.fna&_nc_gid=WW28DUI9dbQVCR_PEs2coQ&_nc_ss=7a3a8&oh=00_Af1-Qt4o9yWsgxijky0dL3ZVmo4DAxuuWMt2nzooLUWX6Q&oe=69D3ECB6','https://scontent.fbwa5-2.fna.fbcdn.net/v/t39.30808-6/653801455_122301107054210231_7807674449096343364_n.jpg?stp=dst-jpg_s590x590_tt6&_nc_cat=104&ccb=1-7&_nc_sid=7b2446&_nc_ohc=nzAxI-4Qdw4Q7kNvwExQ5GA&_nc_oc=AdrJZvO0hGjCf8rV1hjtePsA3FcfvSOiMBr2acKs51htLedXpHfx7Uh_qVyxjSIDPbGC2u7u1n0m0gqnZvCjYMD3&_nc_zt=23&_nc_ht=scontent.fbwa5-2.fna&_nc_gid=fQtdvFv6DZP7zI4MNcRG3A&_nc_ss=7a3a8&oh=00_Af1mBIX4JiBch2x1xiMVRdxlkFhV94euuzS8-yNCRkKZDg&oe=69D40453','https://scontent.fbwa5-1.fna.fbcdn.net/v/t39.30808-6/538379433_122260748036210231_2781025850325899727_n.jpg?stp=dst-jpg_s590x590_tt6&_nc_cat=100&ccb=1-7&_nc_sid=7b2446&_nc_ohc=QbENT2TgIoEQ7kNvwGdGoWs&_nc_oc=Adoosrc_5AFRcSgbwyIUr4i5QQl0vC1QbCVTcWvvS4fwGsL7AZmFg4LxKfZeKaCgIvDRvqEmoy6xMBle8bgBRu-I&_nc_zt=23&_nc_ht=scontent.fbwa5-1.fna&_nc_gid=oBmxHacUif3MYOxQ2-51HQ&_nc_ss=7a3a8&oh=00_Af3RlV2_iACNXmaaflqU19tYHRP5ctmgYtgizVaipIZIaQ&oe=69D3F266','https://scontent.fbwa5-2.fna.fbcdn.net/v/t39.30808-6/603845557_4298229890447406_6415659120267080372_n.jpg?stp=c200.0.1200.1200a_dst-jpg_s206x206_tt6&_nc_cat=102&ccb=1-7&_nc_sid=5df8b4&_nc_ohc=UKlmaQc-xgoQ7kNvwGIDmZ2&_nc_oc=AdoOK-eLF5_V3Ns33W9V_L0AHTIBcZWdyzSxnxZ5XJvB5CAtxuUZJYazT70T9nRXlV2yqkBHOS7UTDC_ya6a8iSW&_nc_zt=23&_nc_ht=scontent.fbwa5-2.fna&_nc_gid=_SQSZRKxqqvkDqZHs-iwQw&_nc_ss=7a3a8&oh=00_Af2mC1WupnZ4erkROpfMUaTP38ty3wWl9TD1wyZ8NmK8TQ&oe=69D40A07','https://scontent.fbwa5-1.fna.fbcdn.net/v/t39.30808-6/505544910_4094805650789832_5158800029470552983_n.jpg?stp=c0.132.1200.1200a_dst-jpg_s206x206_tt6&_nc_cat=107&ccb=1-7&_nc_sid=5df8b4&_nc_ohc=is6R7_WNYmwQ7kNvwHoa7iR&_nc_oc=AdpQegnXJeKW-EmTCdzeLMZqANxgB6-AQLgkIOq4Rw9iO33MntuyKWy2lGVt4TQN5RyYVTHCwvuqd1Dv86lUu1iR&_nc_zt=23&_nc_ht=scontent.fbwa5-1.fna&_nc_gid=-snATiHzFnMRTK7YIIgAUw&_nc_ss=7a3a8&oh=00_Af3fpQlWaaJygfpOkMyk8yGuS4NxN-sKzXoi0Rtv58Ydcw&oe=69D4222A','https://scontent.fbwa5-1.fna.fbcdn.net/v/t39.30808-6/505799585_4094803524123378_4405775697267023407_n.jpg?stp=c342.0.1365.1365a_dst-jpg_s206x206_tt6&_nc_cat=106&ccb=1-7&_nc_sid=5df8b4&_nc_ohc=AkC48xCHhO4Q7kNvwHlYEFr&_nc_oc=AdpJpcxt-CPffqvpb_pG8yhh_didfizZ5rlFO08MPxDuwwyiSQFZYuit018li_AkgxdAjp76JhYAnnxKLz6QGAFK&_nc_zt=23&_nc_ht=scontent.fbwa5-1.fna&_nc_gid=UlPfzeexg1YyPc0yxYlgqQ&_nc_ss=7a3a8&oh=00_Af17SdGTUwjsVp9dDivlsXRv6NbDQ6cPcU1F01jL55PVyA&oe=69D3FE51'];
+  const photoGrid = document.getElementById('photoGallery');
+  if(photoGrid) {
+    photoUrls.forEach(url => {
+      let img = document.createElement('img');
+      img.src = url; img.classList.add('gallery-img');
+      img.addEventListener('click', () => { document.getElementById('lightbox').classList.add('active'); document.getElementById('lightboxImg').src = url; });
+      photoGrid.appendChild(img);
+    });
+  }
+ 
+  const lightbox = document.getElementById('lightbox');
+  if(lightbox) {
+    document.querySelector('.close-lightbox')?.addEventListener('click', () => lightbox.classList.remove('active'));
+    lightbox.addEventListener('click', (e) => { if(e.target === lightbox) lightbox.classList.remove('active'); });
+  }
+
+  // contact form
+  const contactForm = document.getElementById('contactForm');
+  if(contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const feedback = document.getElementById('formFeedback');
+      if(feedback) {
+        feedback.innerHTML = '<span style="color:green;">✅ Message sent! (Demo mode) We will contact you soon.</span>';
+        contactForm.reset();
+        setTimeout(() => feedback.innerHTML = '', 3000);
+      }
+    });
+  }
+
+  // close mobile menu on link click
+  document.querySelectorAll('.nav-link').forEach(ln => ln.addEventListener('click', () => { if(window.innerWidth <=768) document.getElementById('navLinks')?.classList.remove('active'); }));
+</script>
+</body>
+</html>
