@@ -114,6 +114,123 @@
     .login-box input { width: 100%; padding: 10px; margin: 15px 0; border-radius: 40px; border: 1px solid #ddd; }
     .error-msg { color: red; font-size: 12px; }
     img { max-width: 100%; height: auto; }
+
+    /* ========== ENHANCED CONTACT FORM STYLES ========== */
+    .contact-form-card {
+      background: white;
+      border-radius: 32px;
+      box-shadow: var(--shadow-md);
+      padding: 2rem 2rem 2.5rem;
+      margin-top: 2rem;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(230,126,34,0.1);
+    }
+    .form-group-modern {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    .form-group-modern i {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--primary);
+      font-size: 1.2rem;
+      opacity: 0.7;
+      transition: 0.2s;
+    }
+    .form-group-modern.textarea-icon i {
+      top: 28px;
+      transform: none;
+    }
+    .form-group-modern input, 
+    .form-group-modern textarea {
+      width: 100%;
+      padding: 14px 18px 14px 48px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 28px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      transition: all 0.25s ease;
+      background: #fefefe;
+      outline: none;
+      color: #1e293b;
+    }
+    .form-group-modern textarea {
+      padding-top: 16px;
+      resize: vertical;
+      border-radius: 28px;
+    }
+    .form-group-modern input:focus,
+    .form-group-modern textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(230,126,34,0.1);
+    }
+    .form-group-modern input:focus + i,
+    .form-group-modern textarea:focus + i {
+      color: var(--primary);
+      opacity: 1;
+    }
+    .submit-whatsapp-btn {
+      background: linear-gradient(95deg, #25D366 0%, #128C7E 100%);
+      color: white;
+      border: none;
+      width: 100%;
+      padding: 14px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 8px 20px rgba(37,211,102,0.25);
+    }
+    .submit-whatsapp-btn:hover {
+      transform: translateY(-3px);
+      filter: brightness(1.05);
+      box-shadow: 0 12px 25px rgba(37,211,102,0.35);
+    }
+    .form-footer-note {
+      text-align: center;
+      font-size: 0.8rem;
+      margin-top: 1rem;
+      color: #5b6e8c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .form-footer-note i {
+      color: var(--primary);
+    }
+    .contact-success-toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) scale(0.9);
+      background: #1e293b;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 60px;
+      font-weight: 500;
+      z-index: 2000;
+      opacity: 0;
+      transition: 0.2s;
+      pointer-events: none;
+      box-shadow: var(--shadow-md);
+      backdrop-filter: blur(8px);
+      background: rgba(0,0,0,0.8);
+    }
+    .contact-success-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+    }
+    @media (max-width: 640px) {
+      .contact-form-card { padding: 1.5rem; }
+    }
   </style>
 </head>
 <body>
@@ -157,7 +274,36 @@
   <section id="faculty" class="page"><div class="container-custom"><h2 class="section-title">👩‍🏫 Teaching Staff</h2><div class="cards-grid" id="teachingFaculty"></div><h2 class="section-title">📋 Administrative Staff</h2><div class="cards-grid" id="adminFaculty"></div></div></section>
   <section id="calendar" class="page"><div class="container-custom"><h2 class="section-title">📅 Academic Calendar (2083-2026)</h2><div id="calendarGrid" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.5rem;"></div></div></section>
   <section id="gallery" class="page"><div class="container-custom"><h2 class="section-title">📸 Photo Gallery</h2><div class="gallery-grid" id="photoGallery"></div></div><div id="lightbox" class="lightbox"><span class="close-lightbox">&times;</span><img id="lightboxImg" alt="Enlarged view"></div></section>
-  <section id="contact" class="page"><div class="container-custom"><div class="cards-grid" id="contactGrid"></div><h2 class="section-title">Send Message</h2><form id="contactForm" style="background:white; padding:2rem; border-radius:2rem;"><label for="name">Your Name</label><input type="text" id="name" placeholder="Your Name" required><label for="email">Email</label><input type="email" id="email" placeholder="Email" required><label for="message">Message</label><textarea id="message" rows="4" placeholder="Your message"></textarea><button type="submit" class="btn-primary">Send <i class="fas fa-paper-plane"></i></button><p id="formFeedback" style="margin-top:1rem;"></p></form></div></section>
+  
+  <!-- CONTACT PAGE - enhanced form with WhatsApp integration -->
+  <section id="contact" class="page">
+    <div class="container-custom">
+      <div class="cards-grid" id="contactGrid"></div>
+      <h2 class="section-title" style="margin-top: 2rem;">💬 Get in Touch</h2>
+      <div class="contact-form-card" data-aos="fade-up">
+        <form id="enhancedContactForm" action="#" method="post">
+          <div class="form-group-modern">
+            <i class="fas fa-user"></i>
+            <input type="text" id="contactName" placeholder="Your full name *" required>
+          </div>
+          <div class="form-group-modern">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="contactEmail" placeholder="Email address *" required>
+          </div>
+          <div class="form-group-modern textarea-icon">
+            <i class="fas fa-comment-dots"></i>
+            <textarea id="contactMsg" rows="4" placeholder="Write your message, query or feedback... *" required></textarea>
+          </div>
+          <button type="submit" class="submit-whatsapp-btn">
+            <i class="fab fa-whatsapp"></i> Send via WhatsApp
+          </button>
+          <div class="form-footer-note">
+            <i class="fas fa-lock"></i> <span>We’ll reply within 24 hours on WhatsApp</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
 </main>
 <footer><div>© 2025 Gyanjyoti School, Dadeldhura | Follow us: <a href="#" id="facebookLink" style="color:#e67e22;"><i class="fab fa-facebook"></i> Facebook</a></div><div style="padding: 15px; color: #aaa;">✨ Created with ❤️ by Prashant Upreti</div></footer>
 <a href="https://wa.me/9779848825610" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
@@ -202,8 +348,7 @@
       { name: "Mr. Deepak Awasthi", role: "Teacher", exp: "8 yrs", img: "https://pps.whatsapp.net/v/t61.24694-24/542569522_1774697617253053_7075382756434574624_n.jpg?stp=dst-jpg_s96x96_tt6&ccb=11-4&oh=01_Q5Aa4AFCHGITAEpUvJqdkQmGTvsilNNqmuDT021OCsVaN6TI6A&oe=69DD9A4F&_nc_sid=5e03e0&_nc_cat=110" },
       { name: "Mrs. Ganga Bist", role: "Social Studies", exp: "8 yrs", img: "https://scontent.fbwa5-2.fna.fbcdn.net/v/t39.30808-1/328314596_712673993837618_6557049020652518932_n.jpg?stp=dst-jpg_s100x100_tt6&_nc_cat=111&ccb=1-7&_nc_sid=e99d92&_nc_ohc=35mJX_7hGb0Q7kNvwGX9Tyb&_nc_oc=AdqLEAiFGB1TqE5Azq7CoJq4saR24FBCoBWTvk0APPhtFGGLKe1AL9WRZaaNiueXLNJ0XIWPX04k8SMSzciShWeN&_nc_zt=24&_nc_ht=scontent.fbwa5-2.fna&_nc_gid=AgmUu2I9gkgJfRquDf6qYg&_nc_ss=7a3a8&oh=00_Af3JWLAfyeLJIb4hd5CDSCat_E42uJTXi_UOgU12NLrIAA&oe=69DA8CF8" },
       {name:"Karan Bk", role:"Teacher",exp:"2 years", img:"https://pps.whatsapp.net/v/t61.24694-24/518975212_4684451285109076_1485409008456813650_n.jpg?stp=dst-jpg_s96x96_tt6&ccb=11-4&oh=01_Q5Aa4AF8TZByMUMC-SEkhc0xN4dXhxWsdX0LJYO0UlcSnNy3Yw&oe=69DD8F95&_nc_sid=5e03e0&_nc_cat=104"},
-      {name:"Namita Upreti", role:"Teacher", exp:"5 years", img:"https://scontent.fbwa5-1.fna.fbcdn.net/v/t39.30808-6/469700411_565506346196798_6319249854079598074_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=53a332&_nc_ohc=LMf7iWJZIf0Q7kNvwGfZKdk&_nc_oc=AdrQ34ZsqXTXp09KvExGOvvWs246L4SewszcbcXQ-b7L1zjEXBJEAe0bJbF8EWLgzmVfajyHTuTnDcWPAE_-OmhN&_nc_zt=23&_nc_ht=scontent.fbwa5-1.fna&_nc_gid=oRriV8xQsulY3OFLONliVQ&_nc_ss=7a3a8&oh=00_Af1kr_8j5V_r4s6ACoUBdx_W33PVRzT94cl_-Xvfk8yrfw&oe=69DA6CB3"
-      },
+      {name:"Namita Upreti", role:"Teacher", exp:"5 years", img:"https://scontent.fbwa5-1.fna.fbcdn.net/v/t39.30808-6/469700411_565506346196798_6319249854079598074_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=53a332&_nc_ohc=LMf7iWJZIf0Q7kNvwGfZKdk&_nc_oc=AdrQ34ZsqXTXp09KvExGOvvWs246L4SewszcbcXQ-b7L1zjEXBJEAe0bJbF8EWLgzmVfajyHTuTnDcWPAE_-OmhN&_nc_zt=23&_nc_ht=scontent.fbwa5-1.fna&_nc_gid=oRriV8xQsulY3OFLONliVQ&_nc_ss=7a3a8&oh=00_Af1kr_8j5V_r4s6ACoUBdx_W33PVRzT94cl_-Xvfk8yrfw&oe=69DA6CB3"},
       {name:"Kabita Deuba",role :"Teacher", exp:"2years",img: "#"}
     ],
     adminFaculty: [
@@ -221,11 +366,7 @@
     stats: { years: 19, students: 150, teachers: 12, pass: 99 }
   };
   classNames.forEach((cls, idx) => {
-    defaultData.resultImages[cls] = [
-      `#`,
-      ``,
-      ``
-    ];
+    defaultData.resultImages[cls] = [`#`, ``, ``];
   });
 
   function loadData() {
@@ -237,6 +378,41 @@
     }
     applyAllData();
     AOS.init({ duration: 800, once: true });
+    setupWhatsAppContactForm(); // attach new form handler
+  }
+
+  function setupWhatsAppContactForm() {
+    const form = document.getElementById('enhancedContactForm');
+    if (!form) return;
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('contactName')?.value.trim();
+      const email = document.getElementById('contactEmail')?.value.trim();
+      const message = document.getElementById('contactMsg')?.value.trim();
+      if (!name || !email || !message) {
+        alert('❌ Please fill in all fields before sending.');
+        return;
+      }
+      // Extract school WhatsApp number from contact.phone (clean format)
+      let rawPhone = fullData.contact?.phone || "+977-9848825610";
+      let digits = rawPhone.replace(/\D/g, '');
+      if (!digits.startsWith('977')) digits = '977' + digits;
+      const whatsappNumber = digits; // e.g., 9779848825610
+      const composedMsg = `*New enquiry from Gyanjyoti Website*%0A%0A👤 *Name:* ${encodeURIComponent(name)}%0A📧 *Email:* ${encodeURIComponent(email)}%0A💬 *Message:* ${encodeURIComponent(message)}%0A%0A🙏 Thank you for contacting Gyanjyoti School.`;
+      const waLink = `https://wa.me/${whatsappNumber}?text=${composedMsg}`;
+      // Show toast before opening
+      const toast = document.createElement('div');
+      toast.className = 'contact-success-toast';
+      toast.innerHTML = '<i class="fab fa-whatsapp"></i> Redirecting to WhatsApp...';
+      document.body.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 10);
+      setTimeout(() => {
+        window.open(waLink, '_blank');
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 500);
+        form.reset();
+      }, 600);
+    });
   }
 
   function applyAllData() {
@@ -256,9 +432,8 @@
     renderContact();
     updateStatsNumbersStatic();
     statsCounted = false;
-    if(document.getElementById('home').classList.contains('active-page-section')) {
-      startStatsCounterIfVisible();
-    }
+    if(document.getElementById('home').classList.contains('active-page-section')) startStatsCounterIfVisible();
+    setupWhatsAppContactForm();
   }
 
   function rebuildHeroSlider() {
@@ -485,10 +660,7 @@
       observer.observe(statsSection);
     }
   }
-
   function resetStatsOnHome() { statsCounted = false; startStatsCounterIfVisible(); }
-
-  // Navigation
   const pages = document.querySelectorAll('.page');
   const navLinks = document.querySelectorAll('.nav-link');
   function showPage(pageId) {
@@ -520,14 +692,7 @@
   lightbox?.addEventListener('click', (e) => { if(e.target === lightbox) lightbox.classList.remove('active'); });
   document.addEventListener('keydown', (e) => { if(e.key==='Escape' && lightbox.classList.contains('active')) lightbox.classList.remove('active'); });
 
-  document.getElementById('contactForm')?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    document.getElementById('formFeedback').innerHTML = '<span style="color:green;">✅ Message sent! (Demo mode)</span>';
-    e.target.reset();
-    setTimeout(() => document.getElementById('formFeedback').innerHTML = '', 3000);
-  });
-
-  // Admin
+  // Admin panel logic (unchanged but functional)
   document.getElementById('adminBtn').onclick = () => {
     if(!isAdminLoggedIn) {
       let modal = document.createElement('div');
@@ -596,7 +761,6 @@
       document.getElementById('adminPanel').classList.remove('open');
     } catch(e) { alert('Invalid JSON format: '+e.message); }
   };
-  
   loadData();
 </script>
 </body>
