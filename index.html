@@ -11,26 +11,9 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Poppins', sans-serif; background: #f9f9f9; color: #333; overflow-x: hidden; }
     :root { --primary: #e67e22; --secondary: #2c3e66; --shadow-sm: 0 10px 25px -5px rgba(0,0,0,0.05); --shadow-md: 0 20px 25px -12px rgba(0,0,0,0.1); }
-    .announcement-bar {
-      background: var(--primary);
-      color: white;
-      text-align: center;
-      padding: 10px 16px;
-      font-weight: 500;
-      position: sticky;
-      top: 0;
-      z-index: 1002;
-    }
+    .announcement-bar { background: var(--primary); color: white; text-align: center; padding: 10px 16px; font-weight: 500; position: sticky; top: 0; z-index: 1002; }
     header { background: white; box-shadow: 0 4px 20px rgba(0,0,0,0.05); position: relative; z-index: 1001; }
-    .nav-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0.8rem 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
+    .nav-container { max-width: 1200px; margin: 0 auto; padding: 0.8rem 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; }
     .logo-area { display: flex; align-items: center; gap: 12px; }
     .logo-img { width: 55px; height: 55px; object-fit: cover; border-radius: 50%; background: #fff3e6; padding: 6px; box-shadow: var(--shadow-sm); }
     .logo-text h1 { font-size: 1.5rem; font-weight: 700; color: var(--secondary); }
@@ -41,20 +24,7 @@
     .menu-toggle { font-size: 1.6rem; cursor: pointer; display: none; color: var(--secondary); }
     @media (max-width: 768px) {
       .menu-toggle { display: block; }
-      .nav-links {
-        position: fixed;
-        top: 0;
-        left: -100%;
-        background: white;
-        width: 80%;
-        height: 100vh;
-        flex-direction: column;
-        padding: 80px 2rem 2rem;
-        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-        transition: 0.3s;
-        gap: 1.8rem;
-        z-index: 1003;
-      }
+      .nav-links { position: fixed; top: 0; left: -100%; background: white; width: 80%; height: 100vh; flex-direction: column; padding: 80px 2rem 2rem; box-shadow: 2px 0 10px rgba(0,0,0,0.1); transition: 0.3s; gap: 1.8rem; z-index: 1003; }
       .nav-links.active { left: 0; }
       .hero-slider { height: 50vh; }
       .stats-grid { flex-direction: column; align-items: center; }
@@ -114,123 +84,19 @@
     .login-box input { width: 100%; padding: 10px; margin: 15px 0; border-radius: 40px; border: 1px solid #ddd; }
     .error-msg { color: red; font-size: 12px; }
     img { max-width: 100%; height: auto; }
-
-    /* ========== ENHANCED CONTACT FORM STYLES ========== */
-    .contact-form-card {
-      background: white;
-      border-radius: 32px;
-      box-shadow: var(--shadow-md);
-      padding: 2rem 2rem 2.5rem;
-      margin-top: 2rem;
-      transition: all 0.3s ease;
-      border: 1px solid rgba(230,126,34,0.1);
-    }
-    .form-group-modern {
-      margin-bottom: 1.5rem;
-      position: relative;
-    }
-    .form-group-modern i {
-      position: absolute;
-      left: 18px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--primary);
-      font-size: 1.2rem;
-      opacity: 0.7;
-      transition: 0.2s;
-    }
-    .form-group-modern.textarea-icon i {
-      top: 28px;
-      transform: none;
-    }
-    .form-group-modern input, 
-    .form-group-modern textarea {
-      width: 100%;
-      padding: 14px 18px 14px 48px;
-      border: 1.5px solid #e2e8f0;
-      border-radius: 28px;
-      font-family: 'Poppins', sans-serif;
-      font-size: 1rem;
-      transition: all 0.25s ease;
-      background: #fefefe;
-      outline: none;
-      color: #1e293b;
-    }
-    .form-group-modern textarea {
-      padding-top: 16px;
-      resize: vertical;
-      border-radius: 28px;
-    }
-    .form-group-modern input:focus,
-    .form-group-modern textarea:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 4px rgba(230,126,34,0.1);
-    }
-    .form-group-modern input:focus + i,
-    .form-group-modern textarea:focus + i {
-      color: var(--primary);
-      opacity: 1;
-    }
-    .submit-whatsapp-btn {
-      background: linear-gradient(95deg, #25D366 0%, #128C7E 100%);
-      color: white;
-      border: none;
-      width: 100%;
-      padding: 14px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      border-radius: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      cursor: pointer;
-      transition: 0.3s;
-      box-shadow: 0 8px 20px rgba(37,211,102,0.25);
-    }
-    .submit-whatsapp-btn:hover {
-      transform: translateY(-3px);
-      filter: brightness(1.05);
-      box-shadow: 0 12px 25px rgba(37,211,102,0.35);
-    }
-    .form-footer-note {
-      text-align: center;
-      font-size: 0.8rem;
-      margin-top: 1rem;
-      color: #5b6e8c;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
-    .form-footer-note i {
-      color: var(--primary);
-    }
-    .contact-success-toast {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%) scale(0.9);
-      background: #1e293b;
-      color: white;
-      padding: 12px 24px;
-      border-radius: 60px;
-      font-weight: 500;
-      z-index: 2000;
-      opacity: 0;
-      transition: 0.2s;
-      pointer-events: none;
-      box-shadow: var(--shadow-md);
-      backdrop-filter: blur(8px);
-      background: rgba(0,0,0,0.8);
-    }
-    .contact-success-toast.show {
-      opacity: 1;
-      transform: translateX(-50%) scale(1);
-    }
-    @media (max-width: 640px) {
-      .contact-form-card { padding: 1.5rem; }
-    }
+    .contact-form-card { background: white; border-radius: 32px; box-shadow: var(--shadow-md); padding: 2rem 2rem 2.5rem; margin-top: 2rem; transition: all 0.3s ease; border: 1px solid rgba(230,126,34,0.1); }
+    .form-group-modern { margin-bottom: 1.5rem; position: relative; }
+    .form-group-modern i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--primary); font-size: 1.2rem; opacity: 0.7; transition: 0.2s; }
+    .form-group-modern.textarea-icon i { top: 28px; transform: none; }
+    .form-group-modern input, .form-group-modern textarea { width: 100%; padding: 14px 18px 14px 48px; border: 1.5px solid #e2e8f0; border-radius: 28px; font-family: 'Poppins', sans-serif; font-size: 1rem; transition: all 0.25s ease; background: #fefefe; outline: none; color: #1e293b; }
+    .form-group-modern textarea { padding-top: 16px; resize: vertical; border-radius: 28px; }
+    .form-group-modern input:focus, .form-group-modern textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(230,126,34,0.1); }
+    .submit-whatsapp-btn { background: linear-gradient(95deg, #25D366 0%, #128C7E 100%); color: white; border: none; width: 100%; padding: 14px; font-size: 1.1rem; font-weight: 600; border-radius: 40px; display: flex; align-items: center; justify-content: center; gap: 12px; cursor: pointer; transition: 0.3s; box-shadow: 0 8px 20px rgba(37,211,102,0.25); }
+    .submit-whatsapp-btn:hover { transform: translateY(-3px); filter: brightness(1.05); box-shadow: 0 12px 25px rgba(37,211,102,0.35); }
+    .form-footer-note { text-align: center; font-size: 0.8rem; margin-top: 1rem; color: #5b6e8c; display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .contact-success-toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) scale(0.9); background: #1e293b; color: white; padding: 12px 24px; border-radius: 60px; font-weight: 500; z-index: 2000; opacity: 0; transition: 0.2s; pointer-events: none; box-shadow: var(--shadow-md); backdrop-filter: blur(8px); background: rgba(0,0,0,0.8); }
+    .contact-success-toast.show { opacity: 1; transform: translateX(-50%) scale(1); }
+    @media (max-width: 640px) { .contact-form-card { padding: 1.5rem; } }
   </style>
 </head>
 <body>
@@ -274,38 +140,23 @@
   <section id="faculty" class="page"><div class="container-custom"><h2 class="section-title">👩‍🏫 Teaching Staff</h2><div class="cards-grid" id="teachingFaculty"></div><h2 class="section-title">📋 Administrative Staff</h2><div class="cards-grid" id="adminFaculty"></div></div></section>
   <section id="calendar" class="page"><div class="container-custom"><h2 class="section-title">📅 Academic Calendar (2083-2026)</h2><div id="calendarGrid" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.5rem;"></div></div></section>
   <section id="gallery" class="page"><div class="container-custom"><h2 class="section-title">📸 Photo Gallery</h2><div class="gallery-grid" id="photoGallery"></div></div><div id="lightbox" class="lightbox"><span class="close-lightbox">&times;</span><img id="lightboxImg" alt="Enlarged view"></div></section>
-  
-  <!-- CONTACT PAGE - enhanced form with WhatsApp integration -->
   <section id="contact" class="page">
     <div class="container-custom">
       <div class="cards-grid" id="contactGrid"></div>
       <h2 class="section-title" style="margin-top: 2rem;">💬 Get in Touch</h2>
       <div class="contact-form-card" data-aos="fade-up">
         <form id="enhancedContactForm" action="#" method="post">
-          <div class="form-group-modern">
-            <i class="fas fa-user"></i>
-            <input type="text" id="contactName" placeholder="Your full name *" required>
-          </div>
-          <div class="form-group-modern">
-            <i class="fas fa-envelope"></i>
-            <input type="email" id="contactEmail" placeholder="Email address *" required>
-          </div>
-          <div class="form-group-modern textarea-icon">
-            <i class="fas fa-comment-dots"></i>
-            <textarea id="contactMsg" rows="4" placeholder="Write your message, query or feedback... *" required></textarea>
-          </div>
-          <button type="submit" class="submit-whatsapp-btn">
-            <i class="fab fa-whatsapp"></i> Send via WhatsApp
-          </button>
-          <div class="form-footer-note">
-            <i class="fas fa-lock"></i> <span>We’ll reply within 24 hours on WhatsApp</span>
-          </div>
+          <div class="form-group-modern"><i class="fas fa-user"></i><input type="text" id="contactName" placeholder="Your full name *" required></div>
+          <div class="form-group-modern"><i class="fas fa-envelope"></i><input type="email" id="contactEmail" placeholder="Email address *" required></div>
+          <div class="form-group-modern textarea-icon"><i class="fas fa-comment-dots"></i><textarea id="contactMsg" rows="4" placeholder="Write your message, query or feedback... *" required></textarea></div>
+          <button type="submit" class="submit-whatsapp-btn"><i class="fab fa-whatsapp"></i> Send via WhatsApp</button>
+          <div class="form-footer-note"><i class="fas fa-lock"></i> <span>We'll reply within 24 hours on WhatsApp</span></div>
         </form>
       </div>
     </div>
   </section>
 </main>
-<footer><div>© 2025 Gyanjyoti School, Dadeldhura | Follow us: <a href="#" id="facebookLink" style="color:#e67e22;"><i class="fab fa-facebook"></i> Facebook</a></div><div style="padding: 15px; color: #aaa;">✨ Created with ❤️ by <a href="https://uprashant.netlify.app/"> Prashant Upreti</a></div></footer>
+<footer><div>© 2025 Gyanjyoti School, Dadeldhura | Follow us: <a href="#" id="facebookLink" style="color:#e67e22;"><i class="fab fa-facebook"></i> Facebook</a></div><div style="padding: 15px; color: #aaa;">✨ Created with ❤️ by Prashant Upreti</div></footer>
 <a href="https://wa.me/9779848825610" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 <button class="admin-btn" id="adminBtn"><i class="fas fa-edit"></i> Admin</button>
 <div id="adminPanel" class="admin-panel"><span class="close-admin" id="closeAdmin">&times;</span><h3>Full Content Editor</h3><div style="max-height: 90%; overflow-y: auto;"><label>Logo URL</label><input type="text" id="editLogoUrl"><label>School Name</label><input id="editSchoolName"><label>Tagline</label><input id="editTagline"><label>Announcement</label><input id="editAnnouncement"><label>Hero Slider Images (JSON array)</label><textarea id="editSlides" rows="2"></textarea><label>Features (JSON: icon, title, desc)</label><textarea id="editFeatures" rows="4"></textarea><label>Notices (JSON: date, text)</label><textarea id="editNotices" rows="4"></textarea><label>About Subtitle</label><input id="editAboutSubtitle"><label>History Text</label><textarea id="editHistory" rows="2"></textarea><label>Mission Text</label><textarea id="editMission" rows="2"></textarea><label>Vision Text</label><textarea id="editVision" rows="2"></textarea><label>Teaching Faculty (JSON: name, role, exp, img)</label><textarea id="editTeachingFaculty" rows="5"></textarea><label>Admin Staff (JSON)</label><textarea id="editAdminFaculty" rows="3"></textarea><label>Calendar Events (JSON object month -> array)</label><textarea id="editCalendarEvents" rows="5"></textarea><label>Gallery Images (URL array)</label><textarea id="editGallery" rows="3"></textarea><label>Result Images (JSON: class -> array of 3 URLs)</label><textarea id="editResultImages" rows="5"></textarea><label>Contact Info (JSON: address, phone, email, facebook, mapEmbed)</label><textarea id="editContact" rows="3"></textarea><label>Stats Numbers (JSON: years, students, teachers, pass)</label><textarea id="editStats" rows="2"></textarea><button class="save-btn" id="saveAllBtn">Save All Changes</button><p style="font-size:12px; margin-top:10px;">Password protected. All data saved in your browser.</p></div></div>
@@ -321,6 +172,22 @@
   let slidesList = [];
 
   const classNames = ['Nursery','LKG','UKG','Class 1','Class 2','Class 3','Class 4','Class 5','Class 6','Class 7','Class 8'];
+  
+  // YOUR PROVIDED RESULT IMAGES (directly from your JSON)
+  const providedResultImages = {
+    "Nursery": ["https://scontent.fbwa5-1.fna.fbcdn.net/v/t39.30808-6/668454733_122304880586210231_2166365402386641883_n.jpg?stp=dst-jpg_s590x590_tt6&_nc_cat=108&ccb=1-7&_nc_sid=7b2446&_nc_ohc=arguiN8hn9YQ7kNvwGmEa__&_nc_oc=AdoTdskSZGapNGUqxqMfU8dmVBXugzy6r0HbN2QYa7wNYVi3WBg6WyR4cdsBco5q596cFr8ZVQ2fkqcasHYeM9&_nc_zt=23&_nc_ht=scontent.fbwa5-1.fna&_nc_gid=8rPBTxfYaHz2M-H_oyDuag&_nc_ss=7a3a8&oh=00_Af3uFeg12wFYaW8rKZHlH1y29YgETVx_gJnjA9jdsLt-Gg&oe=69DB9BE6", "", ""],
+    "LKG": ["https://scontent.fbwa5-2.fna.fbcdn.net/v/t39.30808-6/666031330_122304880640210231_1306484483335180030_n.jpg?stp=dst-jpg_s590x590_tt6&_nc_cat=110&ccb=1-7&_nc_sid=7b2446&_nc_ohc=8kANnL1tNFAQ7kNvwFrXrO1&_nc_oc=Adr3bBHrrVwPSyVJzYOHSY1Z-2e9EecYbrUUr8F-traSmgamd0NDh233VGjT05bwJucMJNVfzeUAmsxELVlcIg6G&_nc_zt=23&_nc_ht=scontent.fbwa5-2.fna&_nc_gid=8rPBTxfYaHz2M-H_oyDuag&_nc_ss=7a3a8&oh=00_Af3xp5EcO1ZAOvWA7AN7D-w_TaxaIiq6FUo3P0wpKjnq-Q&oe=69DBB6C2", "", ""],
+    "UKG": ["https://scontent.fbwa5-1.fna.fbcdn.net/v/t39.30808-6/668015559_122304880682210231_5956977417878314645_n.jpg?stp=dst-jpg_s590x590_tt6&_nc_cat=100&ccb=1-7&_nc_sid=7b2446&_nc_ohc=kBUAmU8VnA8Q7kNvwE2QxKU&_nc_oc=AdoNv_ZpCYlTORdIfDtrNupdZ-1A71keiF7-Kd5YDYOOXdjPG0pD7DrPT733xZfmYMxYo5zSlWPMy6di_JcryZzW&_nc_zt=23&_nc_ht=scontent.fbwa5-1.fna&_nc_gid=8rPBTxfYaHz2M-H_oyDuag&_nc_ss=7a3a8&oh=00_Af1AnNrzm6HQ_Y24sMKr3sZ4-N0Kb9ik9TEl4XNEqmhJxw&oe=69DB903B", "", ""],
+    "Class 1": ["https://scontent.fbwa5-1.fna.fbcdn.net/v/t39.30808-6/663224918_122304880742210231_36515606323784154_n.jpg?stp=dst-jpg_s590x590_tt6&_nc_cat=105&ccb=1-7&_nc_sid=7b2446&_nc_ohc=RgMOjP76U5EQ7kNvwEoJjkN&_nc_oc=AdrA6t6tZPbdN5fXzfM9qn4qDq-GsJ9K38jLJdgHJ36Vsc4RWjNQipWLsfucDwyOWX-tB3a-rPHmziT_2vKXL7FY&_nc_zt=23&_nc_ht=scontent.fbwa5-1.fna&_nc_gid=8rPBTxfYaHz2M-H_oyDuag&_nc_ss=7a3a8&oh=00_Af2je-eb47exg4JHesSPf6dqY8Ja6XMvCpomkPoPnuifiA&oe=69DBBC22", "", ""],
+    "Class 2": ["https://scontent.fbwa5-1.fna.fbcdn.net/v/t39.30808-6/667625757_122304880790210231_5883206898105466007_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=7b2446&_nc_ohc=ONyqrXzsYL4Q7kNvwEZrTHm&_nc_oc=Adrua8RHQUhU8D_aGnkQV10PMbXz26MPZHuQEVbptGqxq4H9FTEpdgoRfrE86GgcuhzCfC5pzBuh5QBjSD3my4WR&_nc_zt=23&_nc_ht=scontent.fbwa5-1.fna&_nc_gid=hBQQ4cL-Nw_SIBYLKQO8kA&_nc_ss=7a3a8&oh=00_Af2QyiY7FFdYamv1DiC2PQvrcE61p-aagYhJfiN9As_aBQ&oe=69DB94D8", "", ""],
+    "Class 3": ["https://scontent.fbwa5-2.fna.fbcdn.net/v/t39.30808-6/663273735_122304880838210231_8329996244778369379_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=7b2446&_nc_ohc=Ls9XGrgvcSkQ7kNvwEk0XMu&_nc_oc=Adol2sJK-AMQBDTbUlppfZT8voPC0Hwy1jHNubXwBuPFfJpAzr7gzeiXuVOhRgEaRaqBWJ_p3TKJ-Y5-eJxleoCG&_nc_zt=23&_nc_ht=scontent.fbwa5-2.fna&_nc_gid=bIFhRtqu4d9N5Vo5xvQ8WQ&_nc_ss=7a3a8&oh=00_Af0kJ4sPKXy2ph1A0FQO0_jD8PlB_eWAreMRokylWtoTEw&oe=69DB8ED2", "", ""],
+    "Class 4": ["https://scontent.fbwa5-2.fna.fbcdn.net/v/t39.30808-6/668412312_122304880880210231_545048041524935891_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=7b2446&_nc_ohc=_FiGkQobpdgQ7kNvwHtUt--&_nc_oc=Adp4yW82BJzFMzXM6aXqxgdjLa0eV-P9bw-Qo0m8rP9F_PjByle65oBGu-JFoyJGnTej2-XLsHR62KtWEpYL0GzM&_nc_zt=23&_nc_ht=scontent.fbwa5-2.fna&_nc_gid=uwaO_7R-ipYVrHGR0IVf7w&_nc_ss=7a3a8&oh=00_Af0hjfBw5QfQDttq2kLhuhB8LI83eoQzjhYZ_0XRlR5_Ig&oe=69DBB399", "", ""],
+    "Class 5": ["https://scontent.fbwa5-1.fna.fbcdn.net/v/t39.30808-6/667611787_122304880928210231_4193070196854962467_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=7b2446&_nc_ohc=fmlwrIUrGygQ7kNvwEVKVyq&_nc_oc=Ado6XVFUqzoRRQxWH-_2wxExDx3zphbkj0irBw8senTv0BkHBWQkvZBxJIpe1LmIIVKaTiDvQYgoDxIKDddrAszK&_nc_zt=23&_nc_ht=scontent.fbwa5-1.fna&_nc_gid=8gW4Mpecyrlz38OZqdpvig&_nc_ss=7a3a8&oh=00_Af3RkC_8goVeNecjou2KC-fsHBQq7dMbBvHH4QIzU33cbw&oe=69DBA1B5", "", ""],
+    "Class 6": ["https://scontent.fbwa5-1.fna.fbcdn.net/v/t39.30808-6/668465325_122304880970210231_4319890085718711728_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=7b2446&_nc_ohc=GY8-aIkp1l4Q7kNvwGQJrOD&_nc_oc=AdrsoNE5XX1QPpCH0r7qI1Jm0yPRMRU4lKz5zJLm05P1LqHW_q3bDYYEiMuFd_U6w14xeqIeuLgm2Gk8ca69Uh5f&_nc_zt=23&_nc_ht=scontent.fbwa5-1.fna&_nc_gid=tDhiWRxDlzM5bJbipHwhzg&_nc_ss=7a3a8&oh=00_Af1gCMpy0BqLky-MDOjnKZI8P-58WbZrVz8j1hEPFhIVWQ&oe=69DB9D5E", "", ""],
+    "Class 7": ["https://scontent.fbwa5-1.fna.fbcdn.net/v/t39.30808-6/663336735_122304881024210231_8823337597263941144_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=7b2446&_nc_ohc=oiecIpgyL6UQ7kNvwGOBpeo&_nc_oc=AdrLlXEaA9taFsZW4rdARQGf9XnvX2xYeqzEmx9sP-AoJ00zpGgrKNiX-8mzOb3Y-39MM46a2v5dGxDislhbtMzP&_nc_zt=23&_nc_ht=scontent.fbwa5-1.fna&_nc_gid=igSZ50YQcwT-mfEonGp7rw&_nc_ss=7a3a8&oh=00_Af1h9CEXEz0Cd3PxVMovA-j2niurA-I12kOCjeffNqb4yQ&oe=69DBA77B", "", ""],
+    "Class 8": ["https://scontent.fbwa5-1.fna.fbcdn.net/v/t39.30808-6/667762102_122304781694210231_9093989326115995231_n.jpg?stp=dst-jpg_s640x640_tt6&_nc_cat=107&ccb=1-7&_nc_sid=7b2446&_nc_ohc=pYTpkiocpc4Q7kNvwG5jteZ&_nc_oc=AdrBpJRrzL5vVc1TFEw-pf67ujyQQZMIbKTgbMCS4UvOpDTkOeQp2NjyipFoY1THx-bmJ7whZ6vh8shPEFvMULXh&_nc_zt=23&_nc_ht=scontent.fbwa5-1.fna&_nc_gid=EU4HBR7lbHN2TYhjNYo5Tg&_nc_ss=7a3a8&oh=00_Af1d_Isy_BFiBR3ofspDoRKzoZaRsR1WhYpR1HUL_QbiuQ&oe=69DB7AE8", "", ""]
+  };
+
   const defaultData = {
     logoUrl: "https://img.icons8.com/color/96/000001/school--v1.png",
     schoolName: "Gyanjyoti School",
@@ -361,26 +228,29 @@
       "Magh 2026": ["Pre-final exams","Science exhibition"], "Falgun 2026": ["Final preparation","Farewell"], "Chaitra 2026": ["Annual result","New admission"]
     },
     gallery: ["https://scontent.fbwa5-1.fna.fbcdn.net/v/t39.30808-6/602913568_4298229787114083_218596657588495024_n.jpg?stp=dst-jpg_s590x590_tt6&_nc_cat=106&ccb=1-7&_nc_sid=7b2446&_nc_ohc=LHTmexmA95cQ7kNvwETsDqE&_nc_oc=Adq_zbgde8ywVxFIzk0LhPbQ-T3UXnOfJd75vReQqRsIl_2IiBtXLulbwXKLFNUf7AAxkY9Fwrm5fHK77gMlgAPi&_nc_zt=23&_nc_ht=scontent.fbwa5-1.fna&_nc_gid=2MVntJGgdmgD_q3osqSmMg&_nc_ss=7a3a8&oh=00_Af1266LLA0jXP_yEA7QHVqTF6jyUuNGUaIOYghgqdHxicg&oe=69DA8A45","https://scontent.fbwa5-2.fna.fbcdn.net/v/t39.30808-6/653801455_122301107054210231_7807674449096343364_n.jpg?stp=dst-jpg_s590x590_tt6&_nc_cat=104&ccb=1-7&_nc_sid=7b2446&_nc_ohc=Q8eiiE7ucWIQ7kNvwH75U6I&_nc_oc=Adr1n7QQiTu_aQbRJIvclD-byRJD7p4-4uKGsKE1A0I2YjEuduxGA9DU9xQ_WZi2_M4pXistTdj3VhaAA8aBHroz&_nc_zt=23&_nc_ht=scontent.fbwa5-2.fna&_nc_gid=PavX1vyAol47CV2u_ZwQfA&_nc_ss=7a3a8&oh=00_Af3_YAwuGP8hwsMSiMlSVWcatTwup7CPOkR_96-XDH9n0Q&oe=69DA6393","https://scontent.fbwa5-1.fna.fbcdn.net/v/t39.30808-6/504427590_4095045884099142_8823393834613070361_n.jpg?stp=dst-jpg_s590x590_tt6&_nc_cat=106&ccb=1-7&_nc_sid=7b2446&_nc_ohc=7wygnbvRIOEQ7kNvwF-N6Au&_nc_oc=Ado_JDXTsaSxzmX3IsG24Bx7igBbiu3hIQPqhZ-gg3LHNVFZBxzo3FmrFserf7xUd3p4M_oF9zYhH5_7_h8uRnmb&_nc_zt=23&_nc_ht=scontent.fbwa5-1.fna&_nc_gid=llMVOOudJ-zPeK4S8yDCRw&_nc_ss=7a3a8&oh=00_Af0U4tIEE1fGSLX2d1Efub2F3sMdK45HWTLR2O_5mtDoJg&oe=69DA8BC4","https://scontent.fbwa5-1.fna.fbcdn.net/v/t39.30808-6/538379433_122260748036210231_2781025850325899727_n.jpg?stp=dst-jpg_s590x590_tt6&_nc_cat=100&ccb=1-7&_nc_sid=7b2446&_nc_ohc=KZbc08fpyykQ7kNvwHVBbq7&_nc_oc=Adq6SKIV_8DmdMWsBP2i7qWP3rqID5KLMPpSKoWKnQwx-mvqsXcFZEnw4nGq8iksAi6rA4iLYZ5W_hQvPknjHbev&_nc_zt=23&_nc_ht=scontent.fbwa5-1.fna&_nc_gid=WK0gvQfBFr1nCfjeAC-IsQ&_nc_ss=7a3a8&oh=00_Af0p5WKuT-xFMsEJQ7ZpH_XF8yQdREjPYfD0BsO9fNCOOQ&oe=69DA89E6","https://scontent.fbwa5-2.fna.fbcdn.net/v/t39.30808-6/427908797_122101944236210231_2061013710772120694_n.jpg?stp=c7.0.400.400a_dst-jpg_s400x400_tt6&_nc_cat=104&ccb=1-7&_nc_sid=1d70fc&_nc_ohc=HpEmir16lHcQ7kNvwFYKZOa&_nc_oc=AdpcFLGtBFgKJZ7nwVyqW5hfiwvJnDi9keIxcqwqZyJ2iHQblHk1_88x0pSUMaMC2bxPI4eKYyk6xt-OSBxPFLX_&_nc_zt=23&_nc_ht=scontent.fbwa5-2.fna&_nc_gid=yMD-Bl0x5ZVWGvYvft7G3A&_nc_ss=7a3a8&oh=00_Af1iU8juEGjrhMQhZCdiUEhJxFXmTl0U24tvZafl1_NaZA&oe=69DA62D1","https://scontent.fbwa5-2.fna.fbcdn.net/v/t39.30808-6/480333379_938570991723536_4515290957458630283_n.jpg?stp=dst-jpg_s590x590_tt6&_nc_cat=104&ccb=1-7&_nc_sid=7b2446&_nc_ohc=M566ZU-Qze0Q7kNvwEuZUqW&_nc_oc=AdrMOoWZ98nsIBMsrODFxS6ZAtBWV4JOL2g1N2Ctiuogd6_yAzR-5O_fBBqLqRHkJO4OypfpFDo2IT3Yu-AwcycB&_nc_zt=23&_nc_ht=scontent.fbwa5-2.fna&_nc_gid=126MoE93zNvXqKcfUQ_HEw&_nc_ss=7a3a8&oh=00_Af3f1L9jrb8lTK8bc9aqQaYp9nTP5cuu4wJLCQqnvwvFLw&oe=69DA7BD1","https://scontent.fbwa5-1.fna.fbcdn.net/v/t39.30808-6/481172460_949093507337951_6173866830291223023_n.jpg?stp=dst-jpg_s590x590_tt6&_nc_cat=107&ccb=1-7&_nc_sid=7b2446&_nc_ohc=z7JqoEc7e-EQ7kNvwEOgF_w&_nc_oc=Adolh2VSmC0ab3G2LQvr8KRNH9Mei629jib1uYtPlh9RdaUppa2QGT-4bxaeUH8QQIe9rVnITGrLl27ip6u9BckZ&_nc_zt=23&_nc_ht=scontent.fbwa5-1.fna&_nc_gid=FOH4kQzRBHYLWAuSZqWIvQ&_nc_ss=7a3a8&oh=00_Af13DN2pKT-ZV2fyhnGx9Y9625Y4PF7Dq3RHKBQlrAzrwA&oe=69DA60FD","https://scontent.fbwa5-1.fna.fbcdn.net/v/t39.30808-6/480329059_1358716498913352_1001929361881551743_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=7b2446&_nc_ohc=ELdlBD2E6BoQ7kNvwGsUt3f&_nc_oc=Ado11sc-aLxYe94blFHowp52KL4GPmbF1AQDbFEBuSplqK4-jO7pOqYQwghk4UihJT_zMSmEyZXlCZ5lMttCtOYp&_nc_zt=23&_nc_ht=scontent.fbwa5-1.fna&_nc_gid=UIVSS66ERi0OVyvPLPX17Q&_nc_ss=7a3a8&oh=00_Af1fe48huSI_X8iQfmDKdueT0H3JGMip3ZIG5JC7f0vSmQ&oe=69DA7E24"],
-    resultImages: {},
+    resultImages: providedResultImages,
     contact: { address: "Dadaban, Dadeldhura, Nepal", phone: "+977-9848825610", email: "gyanjyoti87@gmail.com", facebook: "https://www.facebook.com/profile.php?id=61556306943312", mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3856.4434872833435!2d80.70956724881015!3d29.30878185069716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39a165cac47294db%3A0xd3a06a73492029b3!2sshree%20gyanjyoti!5e1!3m2!1sen!2snp!4v1775120940210!5m2!1sen!2snp" },
     stats: { years: 19, students: 150, teachers: 12, pass: 99 }
   };
-  classNames.forEach((cls, idx) => {
-    defaultData.resultImages[cls] = [`#`, ``, ``];
-  });
 
   function loadData() {
     const saved = localStorage.getItem('gyanjyoti_full_data');
     if (saved) {
-     fullData = JSON.parse(saved);
-  // Force update resultImages with your latest defaults
-  fullData.resultImages = defaultData.resultImages;
-} else {
-  fullData = JSON.parse(JSON.stringify(defaultData));
+      try {
+        fullData = JSON.parse(saved);
+        // CRITICAL: Force result images to use your new ones (overrides old localStorage)
+        fullData.resultImages = providedResultImages;
+        console.log("Loaded from localStorage, but resultImages replaced with fresh ones.");
+      } catch(e) { 
+        fullData = JSON.parse(JSON.stringify(defaultData));
+      }
+    } else {
+      fullData = JSON.parse(JSON.stringify(defaultData));
+      console.log("Loaded default data (no localStorage found).");
     }
     applyAllData();
     AOS.init({ duration: 800, once: true });
-    setupWhatsAppContactForm(); // attach new form handler
+    setupWhatsAppContactForm();
   }
 
   function setupWhatsAppContactForm() {
@@ -395,14 +265,12 @@
         alert('❌ Please fill in all fields before sending.');
         return;
       }
-      // Extract school WhatsApp number from contact.phone (clean format)
       let rawPhone = fullData.contact?.phone || "+977-9848825610";
       let digits = rawPhone.replace(/\D/g, '');
       if (!digits.startsWith('977')) digits = '977' + digits;
-      const whatsappNumber = digits; // e.g., 9779848825610
+      const whatsappNumber = digits;
       const composedMsg = `*New enquiry from Gyanjyoti Website*%0A%0A👤 *Name:* ${encodeURIComponent(name)}%0A📧 *Email:* ${encodeURIComponent(email)}%0A💬 *Message:* ${encodeURIComponent(message)}%0A%0A🙏 Thank you for contacting Gyanjyoti School.`;
       const waLink = `https://wa.me/${whatsappNumber}?text=${composedMsg}`;
-      // Show toast before opening
       const toast = document.createElement('div');
       toast.className = 'contact-success-toast';
       toast.innerHTML = '<i class="fab fa-whatsapp"></i> Redirecting to WhatsApp...';
@@ -578,13 +446,18 @@
       let groupDiv = document.createElement('div');
       groupDiv.className = 'result-group' + (idx===0 ? ' active-group' : '');
       groupDiv.id = `group-${idx}`;
-      const imgs = fullData.resultImages[cls] || defaultData.resultImages[cls];
-      imgs.forEach(src => {
-        let imgDiv = document.createElement('div');
-        imgDiv.className = 'result-card';
-        imgDiv.innerHTML = `<img src="${src}" loading="lazy" style="border-radius:20px; width:100%; cursor:pointer;">`;
-        groupDiv.appendChild(imgDiv);
-      });
+      const imgs = fullData.resultImages[cls] || [];
+      const validImgs = imgs.filter(src => src && src.trim() !== "");
+      if (validImgs.length === 0) {
+        groupDiv.innerHTML = `<div class="result-card"><p>No result images uploaded for ${cls} yet.</p></div>`;
+      } else {
+        validImgs.forEach(src => {
+          let imgDiv = document.createElement('div');
+          imgDiv.className = 'result-card';
+          imgDiv.innerHTML = `<img src="${src}" loading="lazy" style="border-radius:20px; width:100%; cursor:pointer;" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x300?text=Image+Load+Error';">`;
+          groupDiv.appendChild(imgDiv);
+        });
+      }
       groupsDiv.appendChild(groupDiv);
     });
     attachResultFullscreen();
@@ -694,7 +567,7 @@
   lightbox?.addEventListener('click', (e) => { if(e.target === lightbox) lightbox.classList.remove('active'); });
   document.addEventListener('keydown', (e) => { if(e.key==='Escape' && lightbox.classList.contains('active')) lightbox.classList.remove('active'); });
 
-  // Admin panel logic (unchanged but functional)
+  // Admin panel logic
   document.getElementById('adminBtn').onclick = () => {
     if(!isAdminLoggedIn) {
       let modal = document.createElement('div');
