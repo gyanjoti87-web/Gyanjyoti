@@ -372,9 +372,11 @@
   function loadData() {
     const saved = localStorage.getItem('gyanjyoti_full_data');
     if (saved) {
-      try { fullData = JSON.parse(saved); } catch(e) { fullData = JSON.parse(JSON.stringify(defaultData)); }
-    } else {
-      fullData = JSON.parse(JSON.stringify(defaultData));
+     fullData = JSON.parse(saved);
+  // Force update resultImages with your latest defaults
+  fullData.resultImages = defaultData.resultImages;
+} else {
+  fullData = JSON.parse(JSON.stringify(defaultData));
     }
     applyAllData();
     AOS.init({ duration: 800, once: true });
