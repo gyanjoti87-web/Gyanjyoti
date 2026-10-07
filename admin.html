@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Admin | Gyanjyoti School</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:15px/1.5 system-ui,sans-serif;background:#f1f5f9;color:#1e293b}
+[hidden]{display:none!important}
+button,input,textarea{font:inherit}
+.box{max-width:340px;margin:12vh auto;background:#fff;padding:28px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
+.box h2{margin-bottom:12px;color:#2c3e66}
+input,textarea{width:100%;padding:9px 12px;margin:4px 0 8px;border:1px solid #cbd5e1;border-radius:10px;background:#f8fafc}
+textarea{min-height:76px;resize:vertical}
+button{padding:9px 16px;border:0;border-radius:10px;background:#b45309;color:#fff;font-weight:600;cursor:pointer}
+button.g{background:#475569}
+button:disabled{opacity:.6}
+#err{color:#b91c1c;min-height:20px;font-size:.85rem}
+.bar{position:sticky;top:0;z-index:5;background:#2c3e66;color:#fff;padding:10px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.bar b{flex:1}
+main{max-width:760px;margin:16px auto;padding:0 12px 60px}
+details{background:#fff;border-radius:14px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+summary{padding:14px 18px;font-weight:600;color:#2c3e66;cursor:pointer}
+.in{padding:4px 18px 18px}
+.f{display:block;font-size:.8rem;font-weight:600;color:#475569;margin-top:6px}
+.f img{width:90px;height:70px;object-fit:cover;border-radius:8px;margin:6px 0}
+.row{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:10px 12px;margin-bottom:10px}
+.h{display:flex;gap:6px;align-items:center}
+.h b{flex:1;color:#2c3e66}
+.h button{padding:4px 10px;background:#e2e8f0;color:#1e293b}
+.add{width:100%;background:#059669}
+small{color:#64748b}
+</style>
+</head>
+<body>
+<div class="box" id="login">
+  <h2>Admin login</h2>
+  <input id="em" type="email" autocomplete="username" aria-label="Email" placeholder="Email">
+  <input id="pw" type="password" autocomplete="current-password" aria-label="Password" placeholder="Password">
+  <p id="err" role="alert"></p>
+  <button id="go" style="width:100%">Sign in</button>
+</div>
+<div id="panel" hidden>
+  <div class="bar"><b>Content manager</b><span id="who"></span><button id="out" class="g">Sign out</button><button id="save">💾 Save</button></div>
+  <main id="body"></main>
+</div>
+
+<script type="module">
+import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js';
+import {getAuth,signInWithEmailAndPassword,signOut,onAuthStateChanged} from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js';
+import {getDatabase,ref,get,set,runTransaction} from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js';
+
+const CLOUD='m04e49ip', PRESET='ml_default'; // Cloudinary settings
+const app=initializeApp({apiKey:'AIzaSyCxM9UgQK38DMl0OFoXBLYREqKHuCVrXig',authDomain:'gyanjyoti-2064.firebaseapp.com',databaseURL:'https://gyanjyoti-2064-default-rtdb.asia-southeast1.firebasedatabase.app',projectId:'gyanjyoti-2064',appId:'1:536881378015:web:e6917d62fbd7d006ceaf6a'});
+const auth=getAuth(app),db=getDatabase(app);
+const $=s=>document.querySelector(s);
+const arr=v=>Array.isArray(v)?v.filter(x=>x!=null):v&&typeof v==='object'?Object.values(v):[];
+const getP=(o,p)=>p.split('.').reduce((a,k)=>a?.[k],o);
+const setP=(o,p,v)=>{const ks=p.split('.'),l=ks.pop();ks.reduce((a,k)=>a[k]??={},o)[l]=v};
+let data={},loaded=0,dirty=false,busy=0;
+
+function shrink(file){
+  return new Promise(res=>{
+    const im=new Image();
+    im.onload=()=>{
+      const k=Math.min(1,1600/Math.max(im.width,im.height)),c=document.createElement('canvas');
+      c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);
+      const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);
+      c.toBlob(b=>res(b||file),'image/jpeg',.82);
+    };
+    im.onerror=()=>res(file);
+    im.src=URL.createObjectURL(file);
+  });
+}
+
+async function upload(file){
+  if(CLOUD.startsWith('YOUR_'))throw Error('Set CLOUD and PRESET at the top of admin.html first.');
+  const f=new FormData();f.append('file',await shrink(file),'photo.jpg');f.append('upload_preset',PRESET);
+  const r=await fetch(`https://api.cloudinary.com/v1_1/${CLOUD}/image/upload`,{method:'POST',body:f});
+  if(!r.ok)throw Error('Upload failed: '+((await r.json().catch(()=>({}))).error?.message||r.status));
+  return (await r.json()).secure_url;
+}
+
+function field(label,type,val,onSet){
+  const w=document.createElement('label');w.className='f';w.append(label);
+  const put=v=>{onSet(v);dirty=true};
+  if(type==='img'){
+    const pv=document.createElement('img'),t=document.createElement('input'),fi=document.createElement('input'),st=document.createElement('small');
+    pv.alt='';pv.hidden=!val;pv.src=val||'';t.value=val||'';t.placeholder='https://...';fi.type='file';fi.accept='image/*';
+    const upd=u=>{pv.src=u;pv.hidden=!u;t.value=u;put(u)};
+    t.oninput=()=>upd(t.value.trim());
+    fi.onchange=async()=>{
+      if(!fi.files[0])return;
+      busy++;st.textContent='Uploading... wait for the tick before saving';
+      try{upd(await upload(fi.files[0]));st.textContent='Uploaded ✓'}
+      catch(e){st.textContent=e.message}
+      finally{busy--}
+    };
+    w.append(pv,t,fi,st);return w;
+  }
+  const el=document.createElement(type==='area'||type==='lines'?'textarea':'input');
+  if(type==='num')el.type='number';
+  el.value=type==='lines'?arr(val).join('\n'):val??'';
+  el.oninput=()=>put(type==='num'?+el.value||0:type==='lines'?el.value.split('\n').map(s=>s.trim()).filter(Boolean):el.value);
+  w.append(el);return w;
+}
+
+const PERSON=[['name','Name','text'],['role','Role','text'],['exp','Experience','text'],['img','Photo','img']];
+const FIELDS=[
+ ['🏫 General',[['schoolName','School name','text'],['tagline','Tagline','text'],['announcement','Announcement bar (clear it when it expires)','area'],['heroTitle','Hero title','text'],['heroSubtitle','Hero subtitle','text'],['logoUrl','Logo','img'],['founded','Founded (B.S. year)','num']]],
+ ['ℹ️ About',[['aboutSubtitle','Subtitle','area'],['history','History','area'],['mission','Mission','area'],['vision','Vision','area']]],
+ ['📊 Stats',[['stats.students','Students','num'],['stats.teachers','Teachers','num'],['stats.pass','Pass %','num']]],
+ ['📞 Contact',[['contact.address','Address','text'],['contact.phone','Phone','text'],['contact.email','Email','text'],['contact.facebook','Facebook URL','text'],['contact.mapEmbed','Google Maps embed URL','area']]]];
+const LISTS=[
+ ['🎞️ Hero slides','slides','Slide','',null],
+ ['⭐ Features','features','Feature',{icon:'⭐',title:'',desc:''},[['icon','Icon (emoji)','text'],['title','Title','text'],['desc','Description','area']]],
+ ['📢 Notices (newest first)','notices','Notice',{title:'',date:'',body:'',image:'',file:''},[['title','Title','text'],['date','Date','text'],['body','Body','area'],['image','Image','img'],['file','Attachment URL (PDF)','text']]],
+ ['👩‍🏫 Teachers','teachingFaculty','Teacher',{name:'',role:'Teacher',exp:'',img:''},PERSON],
+ ['📋 Staff','adminFaculty','Staff',{name:'',role:'',exp:'',img:''},PERSON],
+ ['📅 Calendar (in order)','calendar','Month',{month:'',events:[]},[['month','Month','text'],['events','Events (one per line)','lines']]],
+ ['📸 Gallery','gallery','Photo','',null]];
+
+const sec=(title,fill)=>{const d=document.createElement('details'),s=document.createElement('summary'),i=document.createElement('div');s.textContent=title;i.className='in';fill(i);d.append(s,i);return d};
+const btn=(txt,fn,cls)=>{const b=document.createElement('button');b.type='button';b.textContent=txt;b.onclick=fn;if(cls)b.className=cls;return b};
+
+function build(){
+  const b=$('#body');b.innerHTML='';
+  FIELDS.forEach(([t,fs])=>b.append(sec(t,i=>fs.forEach(([p,l,ty])=>i.append(field(l,ty,getP(data,p),v=>setP(data,p,v)))))));
+  LISTS.forEach(([t,k,l,blank,fs])=>b.append(sec(t,i=>{
+    const L=data[k];
+    const draw=()=>{
+      i.innerHTML='';
+      L.forEach((it,n)=>{
+        const r=document.createElement('div'),h=document.createElement('div'),bt=document.createElement('b');
+        r.className='row';h.className='h';bt.textContent=`${l} ${n+1}`;
+        h.append(bt,
+          btn('▲',()=>{if(n>0){L.splice(n-1,0,L.splice(n,1)[0]);dirty=true;draw()}}),
+          btn('▼',()=>{if(n<L.length-1){L.splice(n+1,0,L.splice(n,1)[0]);dirty=true;draw()}}),
+          btn('✕',()=>{if(confirm('Remove this item?')){L.splice(n,1);dirty=true;draw()}}));
+        r.append(h);
+        if(fs)fs.forEach(([p,lb,ty])=>r.append(field(lb,ty,it[p],v=>it[p]=v)));
+        else r.append(field('Image','img',it,v=>L[n]=v));
+        i.append(r);
+      });
+      i.append(btn('+ Add '+l,()=>{const x=typeof blank==='string'?blank:JSON.parse(JSON.stringify(blank));k==='notices'?L.unshift(x):L.push(x);dirty=true;draw()},'add'));
+    };
+    draw();
+  })));
+}
+
+onAuthStateChanged(auth,async u=>{
+  $('#login').hidden=!!u;$('#panel').hidden=!u;
+  if(!u)return;
+  try{
+    if((await get(ref(db,'admins/'+u.uid))).val()!==true){await signOut(auth);$('#err').textContent='This account is not an admin.';return}
+    const raw=(await get(ref(db,'school'))).val()||{};
+    data={...raw};
+    LISTS.forEach(([,k])=>data[k]=arr(raw[k]));
+    if(!raw.calendar&&raw.calendarEvents)data.calendar=Object.entries(raw.calendarEvents).map(([month,e])=>({month:month.replace(/2026$/,'2083'),events:arr(e)}));
+    delete data.calendarEvents;
+    data.features.forEach(f=>{if(/^[\w\s-]+$/.test(f.icon||'a'))f.icon='⭐'});
+    data.stats={...raw.stats};data.contact={...raw.contact};data.schoolName??='';
+    loaded=raw.updatedAt||0;dirty=false;
+    $('#who').textContent=u.email;build();
+  }catch(e){$('#err').textContent=e.message;await signOut(auth)}
+});
+
+$('#go').onclick=async()=>{
+  $('#err').textContent='';
+  try{await signInWithEmailAndPassword(auth,$('#em').value.trim(),$('#pw').value)}
+  catch(e){$('#err').textContent=e.code==='auth/invalid-credential'?'Wrong email or password.':e.message}
+};
+$('#out').onclick=()=>signOut(auth);
+
+$('#save').onclick=async()=>{
+  if(busy)return alert('An image is still uploading. Wait for "Uploaded ✓", then press Save.');
+  const b=$('#save');b.disabled=true;b.textContent='Saving...';
+  try{
+    const out=JSON.parse(JSON.stringify(data));
+    out.slides=out.slides.filter(Boolean);out.gallery=out.gallery.filter(Boolean);out.updatedAt=Date.now();
+    const old=await get(ref(db,'school'));
+    if(old.exists())await set(ref(db,'backups/'+Date.now()),old.val());
+    const r=await runTransaction(ref(db,'school'),cur=>cur&&(cur.updatedAt||0)!==loaded?undefined:out);
+    if(!r.committed)throw Error('Someone saved newer changes. Reload this page and re-apply your edits.');
+    loaded=out.updatedAt;dirty=false;b.textContent='✓ Saved';
+  }catch(e){alert(e.message);b.textContent='💾 Save'}
+  finally{b.disabled=false;setTimeout(()=>b.textContent='💾 Save',1500)}
+};
+addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue=''}});
+</script>
+</body>
+</html>
