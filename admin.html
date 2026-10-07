@@ -26,6 +26,8 @@ summary{padding:14px 18px;font-weight:600;color:#2c3e66;cursor:pointer}
 .in{padding:4px 18px 18px}
 .f{display:block;font-size:.8rem;font-weight:600;color:#475569;margin-top:6px}
 .f img{width:90px;height:70px;object-fit:cover;border-radius:8px;margin:6px 0}
+.f label{display:block}
+.f button{padding:6px 12px;font-size:.8rem;margin-top:4px}
 .row{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:10px 12px;margin-bottom:10px}
 .h{display:flex;gap:6px;align-items:center}
 .h b{flex:1;color:#2c3e66}
@@ -63,43 +65,76 @@ let data={},loaded=0,dirty=false,busy=0;
 
 function shrink(file){
   return new Promise(res=>{
+    const url=URL.createObjectURL(file);
+    const done=b=>{URL.revokeObjectURL(url);res(b)};
     const im=new Image();
     im.onload=()=>{
       const k=Math.min(1,1600/Math.max(im.width,im.height)),c=document.createElement('canvas');
       c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);
       const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);
-      c.toBlob(b=>res(b||file),'image/jpeg',.82);
+      c.toBlob(b=>done(b||file),'image/jpeg',.82);
     };
-    im.onerror=()=>res(file);
-    im.src=URL.createObjectURL(file);
+    im.onerror=()=>done(file);
+    im.src=url;
   });
 }
 
 async function upload(file){
   if(CLOUD.startsWith('YOUR_'))throw Error('Set CLOUD and PRESET at the top of admin.html first.');
-  const f=new FormData();f.append('file',await shrink(file),'photo.jpg');f.append('upload_preset',PRESET);
+  const f=new FormData();
+  f.append('file',await shrink(file),'gj-'+Date.now()+'-'+Math.random().toString(36).slice(2,8)+'.jpg');
+  f.append('upload_preset',PRESET);
   const r=await fetch(`https://api.cloudinary.com/v1_1/${CLOUD}/image/upload`,{method:'POST',body:f});
   if(!r.ok)throw Error('Upload failed: '+((await r.json().catch(()=>({}))).error?.message||r.status));
   return (await r.json()).secure_url;
 }
 
 function field(label,type,val,onSet){
-  const w=document.createElement('label');w.className='f';w.append(label);
   const put=v=>{onSet(v);dirty=true};
+
   if(type==='img'){
-    const pv=document.createElement('img'),t=document.createElement('input'),fi=document.createElement('input'),st=document.createElement('small');
-    pv.alt='';pv.hidden=!val;pv.src=val||'';t.value=val||'';t.placeholder='https://...';fi.type='file';fi.accept='image/*';
+    const w=document.createElement('div');w.className='f';
+    const lbl=document.createElement('label');lbl.textContent=label;w.append(lbl);
+
+    const pv=document.createElement('img'),t=document.createElement('input'),
+          fi=document.createElement('input'),st=document.createElement('small'),
+          pick=document.createElement('button');
+
+    pv.alt='';pv.hidden=!val;pv.src=val||'';
+    t.value=val||'';t.placeholder='Paste a URL, or use the button below';
+
+    fi.type='file';fi.accept='image/*';fi.hidden=true;
+    pick.type='button';pick.textContent='📷 Choose an image…';pick.className='g';
+
+    let seq=0; // per-field upload generation counter
+
     const upd=u=>{pv.src=u;pv.hidden=!u;t.value=u;put(u)};
     t.oninput=()=>upd(t.value.trim());
+
+    pick.onclick=()=>fi.click();
+
     fi.onchange=async()=>{
-      if(!fi.files[0])return;
-      busy++;st.textContent='Uploading... wait for the tick before saving';
-      try{upd(await upload(fi.files[0]));st.textContent='Uploaded ✓'}
-      catch(e){st.textContent=e.message}
-      finally{busy--}
+      const file=fi.files[0];
+      if(!file)return;
+      const my=++seq;
+      fi.value='';
+      busy++;st.textContent='Uploading… wait for the tick before saving';
+      try{
+        const url=await upload(file);
+        if(my!==seq){st.textContent='Superseded by a newer upload';return;}
+        upd(url);st.textContent='Uploaded ✓';
+      }catch(e){
+        if(my===seq)st.textContent=e.message;
+      }finally{
+        busy--;
+      }
     };
-    w.append(pv,t,fi,st);return w;
+
+    w.append(pv,t,pick,fi,st);
+    return w;
   }
+
+  const w=document.createElement('label');w.className='f';w.append(label);
   const el=document.createElement(type==='area'||type==='lines'?'textarea':'input');
   if(type==='num')el.type='number';
   el.value=type==='lines'?arr(val).join('\n'):val??'';
