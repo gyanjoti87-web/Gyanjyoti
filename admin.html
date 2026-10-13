@@ -31,9 +31,17 @@ summary{padding:14px 18px;font-weight:600;color:#2c3e66;cursor:pointer}
 .row{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:10px 12px;margin-bottom:10px}
 .h{display:flex;gap:6px;align-items:center}
 .h b{flex:1;color:#2c3e66}
-.h button{padding:4px 10px;background:#e2e8f0;color:#1e293b}
+.h button{padding:4px 10px;background:#e2e8f0;color:#1e293b;margin:0;font-size:.9rem}
 .add{width:100%;background:#059669}
 small{color:#64748b}
+.thumbs{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0}
+.th{position:relative;width:72px;height:72px}
+.f .th img{width:100%;height:100%;margin:0;border:1px solid #e2e8f0}
+.f .th button{position:absolute;top:-6px;right:-6px;width:20px;height:20px;padding:0;margin:0;border-radius:50%;background:#b91c1c;font-size:.7rem;line-height:20px}
+.sub{background:#fff;border:1px dashed #cbd5e1;border-radius:10px;padding:8px 12px 10px;margin:8px 0}
+.u{display:flex;gap:6px;align-items:center}
+.u input{margin:0}
+.u button{margin:0!important;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -134,6 +142,67 @@ function field(label,type,val,onSet){
     return w;
   }
 
+  if(type==='imgs'){ // several images, shown as small thumbnails with a remove button
+    const L=Array.isArray(val)?val:[],w=document.createElement('div');w.className='f';
+    const lbl=document.createElement('label'),box=document.createElement('div'),st=document.createElement('small'),
+          fi=document.createElement('input'),u=document.createElement('div'),t=document.createElement('input');
+    lbl.textContent=label;box.className='thumbs';
+    fi.type='file';fi.accept='image/*';fi.multiple=true;fi.hidden=true;
+    u.className='u';t.placeholder='…or paste an image URL (https://)';
+    const commit=()=>{onSet(L);dirty=true};
+    const draw=()=>{
+      box.innerHTML='';
+      L.forEach((src,i)=>{
+        const d=document.createElement('div'),im=document.createElement('img'),x=btn('✕',()=>{L.splice(i,1);commit();draw()});
+        d.className='th';im.src=src;im.alt='';x.title='Remove image';
+        d.append(im,x);box.append(d);
+      });
+    };
+    const pick=btn('📷 Add images…',()=>fi.click(),'g');
+    u.append(t,btn('Add URL',()=>{
+      const v=t.value.trim();
+      if(!/^https:\/\//i.test(v)){st.textContent='URL must start with https://';return}
+      L.push(v);t.value='';st.textContent='';commit();draw();
+    },'g'));
+    fi.onchange=async()=>{
+      const files=[...fi.files];fi.value='';
+      if(!files.length)return;
+      busy++;st.textContent=`Uploading ${files.length} image(s)… wait for the tick before saving`;
+      try{
+        const res=await Promise.allSettled(files.map(f=>upload(f)));
+        let ok=0,bad='';
+        res.forEach(r=>r.status==='fulfilled'?(L.push(r.value),ok++):bad=r.reason?.message||'Upload failed');
+        if(ok){commit();draw()}
+        st.textContent=(ok?`${ok} uploaded ✓`:'')+(bad?` ${bad}`:'');
+      }finally{busy--}
+    };
+    draw();w.append(lbl,box,pick,fi,u,st);
+    return w;
+  }
+
+  if(type==='subs'){ // optional subtopics: each has a title, text and its own images
+    const S=Array.isArray(val)?val:[],w=document.createElement('div');w.className='f';
+    const list=document.createElement('div');
+    const move=(n,d)=>{const m=n+d;if(m<0||m>=S.length)return;S.splice(m,0,S.splice(n,1)[0]);dirty=true;draw()};
+    const draw=()=>{
+      list.innerHTML='';
+      S.forEach((s,n)=>{
+        const r=document.createElement('div'),h=document.createElement('div'),b=document.createElement('b');
+        r.className='sub';h.className='h';b.textContent='Subtopic '+(n+1);
+        h.append(b,btn('▲',()=>move(n,-1)),btn('▼',()=>move(n,1)),
+          btn('✕',()=>{if(confirm('Remove this subtopic and its images?')){S.splice(n,1);dirty=true;draw()}}));
+        r.append(h,
+          field('Subtopic title (e.g. Result, Homework)','text',s.title,v=>s.title=v),
+          field('Details (optional)','area',s.body,v=>s.body=v),
+          field('Images','imgs',s.images,v=>s.images=v));
+        list.append(r);
+      });
+    };
+    w.append(label);draw();
+    w.append(list,btn('+ Add subtopic',()=>{S.push({title:'',body:'',images:[]});put(S);draw()},'g'));
+    return w;
+  }
+
   const w=document.createElement('label');w.className='f';w.append(label);
   const el=document.createElement(type==='area'||type==='lines'?'textarea':'input');
   if(type==='num')el.type='number';
@@ -151,7 +220,7 @@ const FIELDS=[
 const LISTS=[
  ['🎞️ Hero slides','slides','Slide','',null],
  ['⭐ Features','features','Feature',{icon:'⭐',title:'',desc:''},[['icon','Icon (emoji)','text'],['title','Title','text'],['desc','Description','area']]],
- ['📢 Notices (newest first)','notices','Notice',{title:'',date:'',body:'',image:'',file:''},[['title','Title','text'],['date','Date','text'],['body','Body','area'],['image','Image','img'],['file','Attachment URL (PDF)','text']]],
+ ['📢 Notices (newest first)','notices','Notice',{title:'',date:'',body:'',images:[],file:'',subtopics:[]},[['title','Title','text'],['date','Date','text'],['body','Body','area'],['images','Images (small on the site, tap to enlarge)','imgs'],['file','Attachment URL (PDF)','text'],['subtopics','Subtopics (optional)','subs']]],
  ['👩‍🏫 Teachers','teachingFaculty','Teacher',{name:'',role:'Teacher',exp:'',img:''},PERSON],
  ['📋 Staff','adminFaculty','Staff',{name:'',role:'',exp:'',img:''},PERSON],
  ['📅 Calendar (in order)','calendar','Month',{month:'',events:[]},[['month','Month','text'],['events','Events (one per line)','lines']]],
@@ -193,6 +262,11 @@ onAuthStateChanged(auth,async u=>{
     const raw=(await get(ref(db,'school'))).val()||{};
     data={...raw};
     LISTS.forEach(([,k])=>data[k]=arr(raw[k]));
+    data.notices=data.notices.filter(n=>n&&typeof n==='object').map(n=>{
+      const im=arr(n.images).filter(x=>typeof x==='string'),o={...n,images:im.length?im:(typeof n.image==='string'&&n.image?[n.image]:[]),
+        subtopics:arr(n.subtopics).filter(x=>x&&typeof x==='object').map(x=>({title:'',body:'',...x,images:arr(x.images).filter(y=>typeof y==='string')}))};
+      delete o.image;return o;
+    });
     if(!raw.calendar&&raw.calendarEvents)data.calendar=Object.entries(raw.calendarEvents).map(([month,e])=>({month:month.replace(/2026$/,'2083'),events:arr(e)}));
     delete data.calendarEvents;
     data.features.forEach(f=>{if(/^[\w\s-]+$/.test(f.icon||'a'))f.icon='⭐'});
@@ -215,6 +289,11 @@ $('#save').onclick=async()=>{
   try{
     const out=JSON.parse(JSON.stringify(data));
     out.slides=out.slides.filter(Boolean);out.gallery=out.gallery.filter(Boolean);out.updatedAt=Date.now();
+    out.notices.forEach(n=>{
+      n.images=n.images.filter(Boolean);
+      n.subtopics=n.subtopics.filter(s=>s.title||s.body||s.images.some(Boolean));
+      n.subtopics.forEach(s=>s.images=s.images.filter(Boolean));
+    });
     const old=await get(ref(db,'school'));
     if(old.exists())await set(ref(db,'backups/'+Date.now()),old.val());
     const r=await runTransaction(ref(db,'school'),cur=>cur&&(cur.updatedAt||0)!==loaded?undefined:out);
